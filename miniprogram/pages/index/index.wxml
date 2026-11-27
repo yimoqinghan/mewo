@@ -1,0 +1,121 @@
+<view class="page home-prototype {{stateClass}}" bindtouchstart="onTouchStart" bindtouchend="onTouchEnd">
+  <view class="sky-layer" aria-hidden="true">
+    <view class="sky-sun"></view>
+    <image class="sky-cloud sky-cloud--left" src="{{assets.cloudSoft}}" mode="aspectFit" />
+    <image class="sky-cloud sky-cloud--right" src="{{assets.cloudSoft}}" mode="aspectFit" />
+    <image class="lower-hills" src="{{assets.lowerHills}}" mode="scaleToFill" />
+  </view>
+
+  <view class="top-bar">
+    <image class="brand-logo" src="{{assets.officialLogo}}" mode="aspectFit" />
+    <view class="top-actions">
+      <button class="round-action round-action--voice" aria-label="语音陪伴" bindtap="showVoice" style="position: relative; left: -162rpx; top: -97rpx">
+        <image class="round-action__asset" src="{{assets.voiceIcon}}" mode="aspectFit" />
+      </button>
+      <button class="round-action round-action--mine" aria-label="我的" bindtap="openMine" style="position: relative; left: -150rpx; top: -99rpx">
+        <image class="round-action__asset" src="{{assets.mineIcon}}" mode="aspectFit" />
+      </button>
+    </view>
+  </view>
+
+  <view class="slogan" wx:if="{{screenState !== 'menu'}}" aria-label="和猫一起，把日子过得可爱一点">
+    <text>和猫一起，</text>
+    <text>把日子过得</text>
+    <text class="slogan__accent">可爱一点。♡</text>
+    <view class="slogan__underline"></view>
+  </view>
+
+  <view class="cat-stage" catchtap="onCatTap" aria-label="摸摸言喵">
+    <canvas wx:if="{{use3d}}" id="cat-webgl" type="webgl" class="cat-webgl" catchtap="onCatCanvasTap" catchtouchstart="onCatCanvasTouchStart" catchtouchmove="onCatCanvasTouchMove" catchtouchend="onCatCanvasTouchEnd"></canvas>
+    <image wx:if="{{!use3d && introPhase === 'approach'}}" class="cat-figure cat-figure--run {{runFrameClass}}" src="{{runFrameSrc}}" mode="aspectFit" />
+    <block wx:if="{{!use3d && screenState === 'home'}}">
+      <image class="cat-figure cat-figure--home cat-figure--active {{introPhase === 'approach' || blink ? 'cat-figure--hidden' : 'cat-figure--shown'}}" src="{{assets.homeCat}}" mode="aspectFit" />
+      <image class="cat-figure cat-figure--blink-home cat-figure--active {{introPhase === 'approach' || !blink ? 'cat-figure--hidden' : 'cat-figure--shown'}}" src="{{assets.homeCatBlink}}" mode="aspectFit" />
+    </block>
+    <image wx:if="{{!use3d && screenState === 'touch'}}" class="cat-figure cat-figure--touch cat-figure--active" src="{{assets.touchCat}}" mode="aspectFit" lazy-load />
+    <block wx:if="{{!use3d && screenState === 'menu'}}">
+      <image class="cat-figure cat-figure--menu cat-figure--active {{blink ? 'cat-figure--hidden' : 'cat-figure--shown'}}" src="{{assets.menuCat}}" mode="aspectFit" />
+      <image class="cat-figure cat-figure--blink-menu cat-figure--active {{blink ? 'cat-figure--shown' : 'cat-figure--hidden'}}" src="{{assets.menuCatBlink}}" mode="aspectFit" />
+    </block>
+    <view wx:if="{{screenState === 'home' && introPhase === 'ready'}}" class="intro-bubble">
+      <text>戳我呀</text>
+      <image class="intro-bubble__heart" src="{{assets.heart}}" mode="aspectFit" />
+      <view class="intro-bubble__trail" aria-hidden="true">
+        <view class="intro-bubble__dot intro-bubble__dot--large"></view>
+        <view class="intro-bubble__dot intro-bubble__dot--medium"></view>
+        <view class="intro-bubble__dot intro-bubble__dot--small"></view>
+      </view>
+    </view>
+    <image wx:if="{{screenState === 'home' && introPhase === 'ready'}}" class="intro-hand" src="{{assets.touchHand}}" mode="aspectFit" />
+    <view wx:if="{{screenState === 'touch'}}" class="speech-bubble">
+      <text>喵～</text>
+      <view class="speech-bubble__line">
+        <text>好舒服！</text>
+        <image class="speech-bubble__heart" src="{{assets.heart}}" mode="aspectFit" />
+      </view>
+    </view>
+    <image wx:if="{{screenState === 'touch'}}" class="touch-hand" src="{{assets.touchHand}}" mode="aspectFit" />
+    <image wx:if="{{screenState === 'touch'}}" class="touch-ring" src="{{assets.touchRipple}}" mode="aspectFit" />
+    <image wx:if="{{screenState !== 'menu'}}" class="cat-spark cat-spark--one" src="{{assets.heart}}" mode="aspectFit" />
+    <view wx:if="{{screenState !== 'menu'}}" class="cat-spark cat-spark--two">〰</view>
+    <view wx:if="{{use3d}}" class="rotate-tip">左右拖动 · 360°查看</view>
+  </view>
+
+  <view wx:if="{{screenState === 'menu'}}" class="menu-board" catchtap="stopTap">
+    <view class="menu-handle" bindtap="closeMenu"></view>
+    <view class="menu-head menu-head--{{menuView}}">
+      <button wx:if="{{menuView === 'submodules'}}" class="menu-head__back" bindtap="backToModules">返回</button>
+      <view wx:if="{{menuView === 'modules'}}" class="menu-head__copy">
+        <text class="menu-head__title">今天想玩什么？</text>
+      </view>
+      <button class="menu-head__close" bindtap="closeMenu">收起</button>
+    </view>
+    <scroll-view class="menu-list" scroll-y enhanced show-scrollbar="{{false}}" bounces="{{false}}">
+      <view wx:if="{{menuView === 'modules'}}" class="module-grid">
+        <button wx:for="{{modules}}" wx:key="key" class="module-card module-card--{{item.color}} module-card--{{item.key}}" data-key="{{item.key}}" bindtap="openModule">
+          <view class="module-card__copy">
+            <text class="module-card__title">{{item.title}}</text>
+            <text class="module-card__subtitle">{{item.subtitle}}</text>
+          </view>
+          <image wx:if="{{!item.iconFailed}}" class="module-card__image" data-key="{{item.key}}" data-kind="module" src="{{item.icon}}" mode="aspectFit" binderror="onEntryIconError" />
+          <image wx:else class="module-card__image module-card__image--fallback" src="{{assets.menuCat}}" mode="aspectFit" />
+        </button>
+      </view>
+      <view wx:else class="submodule-grid">
+        <button wx:for="{{activeSubmodules}}" wx:key="key" class="submodule-card submodule-card--{{activeModule.color}}" data-key="{{item.key}}" bindtap="handleSubmodule">
+          <image wx:if="{{!item.iconFailed}}" class="submodule-card__image" data-key="{{item.key}}" data-kind="submodule" src="{{item.icon}}" mode="aspectFit" binderror="onEntryIconError" />
+          <image wx:else class="submodule-card__image submodule-card__image--fallback" src="{{assets.menuCat}}" mode="aspectFit" />
+          <view class="submodule-card__copy">
+            <text class="submodule-card__title">{{item.title}}</text>
+          </view>
+        </button>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view wx:if="{{screenState !== 'menu'}}" class="bottom-controls">
+    <button class="bottom-action" aria-label="相册" bindtap="chooseFromAlbum"><image class="bottom-action__asset" src="{{assets.albumIcon}}" mode="aspectFit" /></button>
+    <button class="camera-action camera-action--video" aria-label="打开喵视频，和喵一起上滑看短片" bindtap="openVideoPlayer">
+      <image class="camera-action__icon" src="{{assets.cameraIcon}}" mode="aspectFit" />
+    </button>
+    <button class="bottom-action" aria-label="和喵聊天" bindtap="showChat"><image class="bottom-action__asset" src="{{assets.chatIcon}}" mode="aspectFit" /></button>
+  </view>
+
+  <view wx:if="{{screenState !== 'menu'}}" class="camera-hint">
+    <image class="camera-hint__icon" src="{{assets.cameraIcon}}" mode="aspectFit" />
+    <text>喵视频开刷啦，上滑换下一条～</text>
+  </view>
+
+  <view wx:if="{{photoPath}}" class="photo-preview" catchtap="closePhotoPreview">
+    <view class="photo-preview__card" catchtap="stopTap">
+      <view class="photo-preview__header">
+        <text>今天的喵</text>
+        <button class="photo-preview__close" bindtap="closePhotoPreview">×</button>
+      </view>
+      <image class="photo-preview__image" src="{{photoPath}}" mode="aspectFit" />
+      <button class="photo-preview__confirm" bindtap="startCreate">继续创作</button>
+    </view>
+  </view>
+
+  <view wx:if="{{toastText}}" class="toast" role="status">{{toastText}}</view>
+</view>

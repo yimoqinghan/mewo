@@ -1,0 +1,6 @@
+{
+  "id": "sunny-cat",
+  "name": "阳光喵",
+  "filter": "soft",
+  "beautyValues": { "natural": 40, "light": 68, "clarity": 30, "color": 24 }
+}

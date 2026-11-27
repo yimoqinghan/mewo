@@ -1,0 +1,4 @@
+interface:
+  display_name: "言喵宠物贴纸"
+  short_description: "实现宠物照片抠图、透明描边贴纸与保存分享，并沿用言喵首页风格"
+  default_prompt: "使用 $yanmiao-pet-sticker 开发或优化言喵拍照生成贴纸的完整链路，并完成真实图片与交互验收。"

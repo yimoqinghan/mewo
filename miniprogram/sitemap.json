@@ -1,0 +1,9 @@
+{
+  "desc": "言喵小程序 sitemap",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

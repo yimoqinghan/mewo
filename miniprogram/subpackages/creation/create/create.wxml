@@ -1,0 +1,62 @@
+<view class="ai-page">
+  <view class="ai-sky"><view class="ai-sun"></view><image src="{{assets.cloudSoft}}" mode="aspectFit" /></view>
+  <view class="ai-content">
+    <view class="studio-header">
+      <view><text class="studio-kicker">言喵 · AI 创作工坊</text><text class="studio-title">把想法，变成一张图。</text><text class="studio-subtitle">描述你想看到的画面，剩下的交给 AI。</text></view>
+      <image src="{{assets.menuCat}}" mode="aspectFit" />
+    </view>
+
+    <view class="studio-steps"><text class="active">01 上传参考图</text><text>—</text><text>02 描述想法</text><text>—</text><text>03 生成作品</text></view>
+
+    <view class="account-note" wx:if="{{!loggedIn}}" bindtap="login"><view><text class="note-title">登录后开始创作</text><text class="note-desc">作品和额度会安全地同步到你的账号</text></view><text class="note-link">去登录 ›</text></view>
+    <view class="quota-card" wx:else><view><text class="quota-title">{{isVip ? 'VIP 无限创作' : '今日生图额度'}}</text><text class="quota-desc">{{isVip ? '聊天和生图均不受次数限制' : '生图每日独立计算，失败会自动退还'}}</text></view><text wx:if="{{isVip}}" class="quota-count">∞</text><text wx:else class="quota-count">{{remaining}} / {{dailyLimit}}</text></view>
+
+    <view class="creator-switch card">
+      <view class="section-head"><view><text class="section-title">怎么创作</text><text class="section-desc">先选一种方式，下面只展示对应内容</text></view><text class="pro-badge" wx:if="{{creatorMode === 'custom'}}">自定义</text></view>
+      <view class="creator-tabs"><view class="creator-tab {{creatorMode === 'template' ? 'selected' : ''}}" data-mode="template" bindtap="selectCreatorMode"><text class="tab-title">模板快速创作</text><text class="tab-desc">选一个画面感觉，自动补全描述</text></view><view class="creator-tab {{creatorMode === 'custom' ? 'selected' : ''}}" data-mode="custom" bindtap="selectCreatorMode"><text class="tab-title">自定义描述</text><text class="tab-desc">自己决定场景、动作和细节</text></view></view>
+    </view>
+
+    <view class="reference-card card">
+      <view class="reference-head"><view><text class="section-title">添加一张参考照片</text><text class="section-desc">可选一张喵的照片，帮助 AI 保留它的特征</text></view></view>
+      <block wx:if="{{!photoPath}}"><view class="reference-empty"><image src="{{assets.menuCat}}" mode="aspectFit" /><text class="reference-title">还没有参考照片</text><text class="reference-desc">可以从相册选择，也可以现场拍一张</text></view><view class="reference-actions"><button class="reference-action reference-action--album" data-source="album" bindtap="choosePhoto"><image src="{{assets.albumIcon}}" /><view><text>相册选图</text></view><text class="reference-action__arrow">›</text></button><button class="reference-action reference-action--camera" data-source="camera" bindtap="choosePhoto"><image src="{{assets.cameraIcon}}" /><view><text>拍一张</text></view><text class="reference-action__arrow">›</text></button></view></block>
+      <block wx:else><view class="reference-preview"><image src="{{photoPath}}" mode="aspectFit" /><button class="reference-remove" bindtap="clearPhoto">×</button><text>当前参考图</text></view><view class="reference-actions"><button class="reference-action reference-action--album" data-source="album" bindtap="choosePhoto"><image src="{{assets.albumIcon}}" /><view><text>更换图片</text></view><text class="reference-action__arrow">›</text></button><button class="reference-action reference-action--camera" data-source="camera" bindtap="choosePhoto"><image src="{{assets.cameraIcon}}" /><view><text>重新拍摄</text></view><text class="reference-action__arrow">›</text></button></view></block>
+    </view>
+
+    <view wx:if="{{creatorMode === 'custom'}}" class="prompt-card card">
+      <view class="section-head"><view><text class="section-title">描述你的画面</text><text class="section-desc">越具体，越接近你心里的样子</text></view><text class="required-label">必填</text></view>
+      <view class="prompt-input-shell"><textarea class="prompt-input" value="{{prompt}}" maxlength="1000" auto-height placeholder="例如：一只戴黄色雨衣的黑猫，站在雨后的东京街头，霓虹倒影，电影感，画面温暖又有一点孤独" bindinput="onPromptInput" /><button class="voice-button {{recordingField === 'prompt' ? 'recording' : ''}}" data-field="prompt" bindtap="toggleVoice" disabled="{{voiceBusy}}">{{recordingField === 'prompt' ? '停止录音' : '语音输入'}}</button></view>
+      <text class="voice-status" wx:if="{{voiceBusy}}">正在把语音转成文字…</text>
+      <view class="prompt-footer"><text>{{prompt.length}} / 1000</text><text>中文描述也可以</text></view>
+    </view>
+
+    <view wx:if="{{creatorMode === 'template'}}" class="skill-card card">
+      <view class="section-head"><view><text class="section-title">选择一个创作模板</text><text class="section-desc">选一个喜欢的画面感觉，AI 会自动补全场景和构图</text></view><button class="manage-button" bindtap="openStyleTemplates">管理模板</button></view>
+      <scroll-view scroll-x class="skill-list"><view wx:for="{{skills}}" wx:if="{{item.enabled}}" wx:key="id" class="skill-chip {{activeSkillId === item.id ? 'selected' : ''}}" data-skill="{{item.id}}" bindtap="selectSkill"><text class="skill-chip-name">{{item.name}}</text><text class="skill-chip-desc">{{item.desc}}</text></view></scroll-view>
+    </view>
+
+    <view wx:if="{{creatorMode === 'custom'}}" class="model-card card">
+      <view class="section-head"><view><text class="section-title">生图模型</text><text class="section-desc">可随时切换，不改变你的描述</text></view><text class="model-current">{{selectedImageModel || '加载中'}}</text></view>
+      <scroll-view scroll-x class="model-list"><view wx:for="{{imageModels}}" wx:key="id" class="model-chip {{selectedImageModel === item.id ? 'selected' : ''}}" data-model="{{item.id}}" bindtap="selectImageModel">{{item.label}}</view></scroll-view>
+    </view>
+
+    <view class="advanced-card card" wx:if="{{creatorMode === 'custom'}}">
+      <view class="section-head"><view><text class="section-title">专业参数</text><text class="section-desc">控制画幅与不希望出现的内容</text></view><button class="collapse-button" bindtap="toggleAdvanced">{{showAdvanced ? '收起' : '展开'}}</button></view>
+      <view wx:if="{{showAdvanced}}"><text class="field-label">画幅比例</text><view class="ratio-list"><view wx:for="{{aspectRatios}}" wx:key="id" class="ratio-chip {{selectedAspectRatio === item.id ? 'selected' : ''}}" data-ratio="{{item.id}}" bindtap="selectAspectRatio"><text>{{item.name}}</text><text>{{item.desc}}</text></view></view><text class="field-label negative-label">不希望出现</text><textarea class="negative-input" value="{{negativePrompt}}" maxlength="300" placeholder="例如：文字乱码、过多装饰、模糊" bindinput="onNegativePromptInput" /></view>
+    </view>
+
+    <view class="pro-prompt-card card" wx:if="{{creatorMode === 'custom'}}">
+      <view class="section-head"><view><text class="section-title">专业补充要求</text><text class="section-desc">在上面的画面描述之外，再补充构图、材质或执行细节</text></view><text class="optional-label">可选</text></view>
+      <view class="prompt-input-shell"><textarea class="prompt-input pro-prompt-input" value="{{professionalPrompt}}" maxlength="1000" auto-height placeholder="例如：主体放在左侧三分之一，右侧保留标题留白，使用 50mm 镜头质感，细节清晰" bindinput="onProfessionalPromptInput" /><button class="voice-button {{recordingField === 'professionalPrompt' ? 'recording' : ''}}" data-field="professionalPrompt" bindtap="toggleVoice" disabled="{{voiceBusy}}">{{recordingField === 'professionalPrompt' ? '停止录音' : '语音输入'}}</button></view>
+      <text class="voice-status" wx:if="{{voiceBusy}}">正在把语音转成文字…</text>
+      <view class="prompt-footer"><text>{{professionalPrompt.length}} / 1000</text><text>专业要求会和参数一起生效</text></view>
+    </view>
+
+    <view class="error-note" wx:if="{{error}}">{{error}}</view>
+    <generation-loading wx:if="{{phase !== 'idle'}}" status-text="{{statusText}}" stage-label="{{progressStage}}" progress-hint="{{progressHint}}" progress="{{progress}}" />
+    <button class="primary-button {{quotaExhausted ? 'is-exhausted' : ''}}" bindtap="handlePrimary" loading="{{phase !== 'idle'}}" disabled="{{phase !== 'idle'}}">{{phase !== 'idle' ? '正在生成作品…' : (!loggedIn ? '登录后开始创作' : (quotaExhausted ? '免费次数已用完' : '生成我的作品'))}}</button>
+    <text class="privacy-note">照片、语音和作品默认私密。语音会上传用于转文字，AI 生成内容仅用于创作表达，请在分享前确认内容合适。</text>
+    <button class="library-link" bindtap="openWorks">查看我的作品 ›</button>
+  </view>
+
+  <view class="modal-mask" wx:if="{{showPaywall}}" catchtap="closePaymentNotice"><view class="paywall" catchtap="stopTap"><text class="paywall-kicker">今日创作额度</text><text class="paywall-title">免费次数用完啦</text><text class="paywall-copy">普通创作者每天可免费生成 3 次。支付后即可继续使用更多模型与创作能力。</text><button class="paywall-primary" bindtap="closePaymentNotice">我知道了</button><text class="paywall-footnote">支付功能正在接入中</text></view></view>
+</view>

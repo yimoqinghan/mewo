@@ -1,0 +1,21 @@
+<view class="profile-page" wx:if="{{profileReady}}">
+  <view class="profile-topbar"><button class="back-button" bindtap="back">‹</button><text>{{isPublicShare ? '喵档案' : '我的喵档案'}}</text><button wx:if="{{!isPublicShare}}" class="edit-button" bindtap="edit">编辑</button><text wx:else class="shared-badge">分享查看</text></view>
+
+  <view class="profile-hero">
+    <view class="profile-hero__copy"><text class="profile-hero__eyebrow">MISS MEOW · CHARACTER CARD</text><text class="profile-hero__name">{{cat.name}}</text><text class="profile-hero__role">{{cat.humanProfile.role}}</text><text class="profile-hero__desc">{{cat.humanProfile.speechStyle}}</text></view>
+    <image class="profile-hero__avatar" src="{{photos[0].path}}" mode="aspectFill" />
+  </view>
+
+  <button wx:if="{{!isPublicShare}}" class="profile-card-button" bindtap="createCard">生成喵卡片</button>
+
+  <view class="photo-strip"><view class="section-head"><text class="section-title">它的样子</text><text class="section-count">{{photos.length}} 张照片</text></view><scroll-view scroll-x class="photo-scroll"><view wx:for="{{photos}}" wx:key="id" class="profile-photo {{item.isCover ? 'profile-photo--cover' : ''}}" data-index="{{index}}" bindtap="previewPhoto"><image src="{{item.path}}" mode="aspectFill" /><text wx:if="{{item.isCover}}">封面</text></view></scroll-view></view>
+
+  <view class="info-card info-card--blue"><view class="info-item"><text class="info-item__label">出生日期</text><text class="info-item__value">{{cat.birthday || '还没有记录'}}</text></view><view class="info-item"><text class="info-item__label">现在的年纪</text><text class="info-item__value info-item__value--accent">{{ageText}}</text></view></view>
+
+  <view class="info-card"><text class="card-title">它的猫格</text><view class="tag-row"><text wx:for="{{traitList}}" wx:key="*this" class="trait-tag">{{item}}</text></view><text class="personality">{{cat.personality || '还没有写下它的性格，去编辑档案补充吧。'}}</text></view>
+
+  <view class="info-card persona-card"><view class="card-title-row"><text class="card-title">拟人化设定</text><text class="persona-stamp">角色底座</text></view><view class="persona-line"><text>身份</text><text>{{cat.humanProfile.role}}</text></view><view class="persona-line"><text>说话</text><text>{{cat.humanProfile.speechStyle}}</text></view><view class="persona-line"><text>口头禅</text><text>“{{cat.humanProfile.catchphrase}}”</text></view></view>
+
+  <view class="info-card likes-card"><view><text class="card-title">偏好小档案</text><text class="likes-text">喜欢：{{likesText}}</text><text class="likes-text likes-text--muted">不喜欢：{{dislikesText}}</text></view><text class="heart-mark">♡</text></view>
+</view>
+<view wx:if="{{!profileReady && error}}" class="profile-error"><text>{{error}}</text><button bindtap="back">返回</button></view>

@@ -1,0 +1,23 @@
+.generation-loading { box-sizing: border-box; padding: 20rpx 22rpx; border: 2rpx solid #f0e5f0; border-radius: 22rpx; background: #fff; color: #20243c; }
+.generation-loading__head { margin-bottom: 18rpx; font-size: 22rpx; line-height: 1.4; }
+.generation-loading__head text { display: block; }
+.generation-loading__sub { margin-top: 6rpx; color: #85899b; font-size: 18rpx; }
+.generation-loading__cat-stage { position: relative; height: 116rpx; margin: -2rpx 0 4rpx; }
+.generation-loading__cat-runway { position: absolute; right: 20rpx; bottom: 18rpx; left: 20rpx; height: 6rpx; border-radius: 999rpx; background: #f9dce9; }
+.generation-loading__cat-runner { position: absolute; bottom: 13rpx; width: 88rpx; height: 88rpx; transform: translateX(-50%); animation: generation-cat-run .55s steps(2, end) infinite; }
+.generation-loading__cat-glow { position: absolute; right: 0; bottom: 0; left: 0; width: 96rpx; height: 18rpx; border-radius: 50%; background: rgba(245,169,201,.32); filter: blur(4rpx); }
+.generation-loading__cat { position: relative; z-index: 1; display: block; width: 88rpx; height: 88rpx; }
+@keyframes generation-cat-run { 0%,100% { margin-bottom: 0; } 50% { margin-bottom: 8rpx; } }
+.generation-loading__progress { margin-top: 8rpx; padding-top: 8rpx; }
+.generation-loading__track { position: relative; height: 20rpx; border-radius: 999rpx; background: #eef0f8; overflow: hidden; }
+.generation-loading__fill { height: 100%; border-radius: 999rpx; background: linear-gradient(90deg, #f5a9c9, #f16f9c); transition: width .35s ease; }
+.generation-loading__meta { display: flex; justify-content: space-between; margin-top: 12rpx; color: #85899b; font-size: 17rpx; }
+.generation-loading__meta text:first-child { color: #b15c85; font-weight: 800; }
+.generation-loading__hint { display:block; margin-top:10rpx; color:#a0a6b6; font-size:16rpx; line-height:1.45; text-align:center; }
+.generation-loading--overlay { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; padding: 24rpx; border: 2rpx solid rgba(255,255,255,.92); border-radius: 20rpx; background: rgba(255,255,255,.9); box-shadow: 0 10rpx 30rpx rgba(73,93,145,.14); color: #3d2a72; }
+.generation-loading--overlay .generation-loading__head { text-align: center; }
+.generation-loading--overlay .generation-loading__sub,
+.generation-loading--overlay .generation-loading__sub,
+.generation-loading--overlay .generation-loading__meta { color: #85899b; }
+.generation-loading--overlay .generation-loading__cat-stage text { color: #b15c85; }
+.generation-loading--overlay .generation-loading__meta text:first-child { color: #b15c85; }

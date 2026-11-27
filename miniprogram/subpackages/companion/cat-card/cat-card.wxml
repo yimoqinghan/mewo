@@ -1,0 +1,21 @@
+<view class="cat-card-page">
+  <view class="cat-card-topbar">
+    <button class="cat-card-back" bindtap="back">‹</button>
+    <view class="cat-card-topbar__copy"><text class="cat-card-eyebrow">MEOW CARD</text><text class="cat-card-title">喵卡片</text></view>
+    <text class="cat-card-topbar__hint">一张认识它</text>
+  </view>
+
+  <view wx:if="{{cardPath}}" class="cat-card-preview" bindtap="preview"><image src="{{cardPath}}" mode="widthFix" /></view>
+  <view wx:elif="{{generating || loading}}" class="cat-card-loading"><text class="cat-card-loading__star">✦</text><text>正在把喵的资料做成一张卡…</text></view>
+  <view wx:else class="cat-card-error"><text>{{error || '暂时还不能生成喵卡片'}}</text><button bindtap="generateCard">重新生成</button></view>
+
+  <view wx:if="{{cardPath}}" class="cat-card-actions">
+    <button class="cat-card-action cat-card-action--save" bindtap="download" loading="{{saving}}">保存到相册</button>
+    <button class="cat-card-action cat-card-action--share" bindtap="share" loading="{{sharing}}">分享这张卡</button>
+  </view>
+  <text wx:if="{{qrLoading}}" class="cat-card-qr-note">正在生成微信扫码入口…</text>
+  <text wx:elif="{{qrPath}}" class="cat-card-qr-note">已加入扫码查看完整喵档案的小程序码</text>
+  <text wx:else class="cat-card-qr-note">{{qrError || '登录后可生成可扫码的小程序码'}}</text>
+  <text class="cat-card-note">照片和档案默认私密，只有你主动保存或分享时才会离开言喵。</text>
+  <canvas canvas-id="cat-card-canvas" class="cat-card-canvas"></canvas>
+</view>

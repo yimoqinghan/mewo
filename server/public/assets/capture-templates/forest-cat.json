@@ -1,0 +1,6 @@
+{
+  "id": "forest-cat",
+  "name": "森林喵",
+  "filter": "natural",
+  "beautyValues": { "natural": 58, "light": 36, "clarity": 34, "color": 42 }
+}

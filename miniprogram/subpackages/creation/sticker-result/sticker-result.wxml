@@ -1,0 +1,13 @@
+<view class="result-page">
+  <view class="result-sky"><view class="result-sun"></view><image src="{{assets.cloudSoft}}" mode="aspectFit" /></view>
+  <view class="result-content">
+    <view class="result-header"><button bindtap="back">‹</button><view><text wx:if="{{work && work.templateKey === 'pet-sticker'}}">你的专属贴纸完成啦</text><text wx:else>异形创意图完成啦</text><text wx:if="{{work && work.templateKey === 'pet-sticker'}}">保留它原来的可爱，再加一圈白边。</text><text wx:else>保留它的特征，交给大模型重新想象。</text></view><text>✦</text></view>
+    <view class="result-art" wx:if="{{work}}" bindtap="preview"><view class="checker"></view><image src="{{work.cover.url}}" mode="aspectFit" /><text class="private-badge">私密作品 · {{work.saved ? '已保存' : '尚未保存'}}</text></view>
+    <view class="loading-state" wx:if="{{loading}}"><view class="dot-loader">✦</view><text>正在把可爱裁成贴纸…</text></view>
+    <view class="error-state" wx:if="{{error}}"><text>{{error}}</text><button bindtap="retry">重新加载</button></view>
+    <view wx:if="{{work}}" class="result-copy"><text class="result-title">{{work.title}}</text><text class="result-desc">{{work.body}}</text><text class="result-meta">{{work.cats[0].name}} · {{work.templateKey === 'pet-sticker' ? '透明 PNG' : 'AI 创意图'}} · 默认私密</text></view>
+    <view wx:if="{{work}}" class="result-actions"><button class="save-button" bindtap="download" loading="{{saving}}">保存到相册</button><button class="share-button" bindtap="share" loading="{{sharing}}">分享这张</button></view>
+    <button wx:if="{{work && !work.saved}}" class="library-button" bindtap="saveWork">保存到喵作</button>
+    <text class="privacy-copy">作品默认私密。只有你点击保存或分享时，它才会离开言喵的小窝。</text>
+  </view>
+</view>

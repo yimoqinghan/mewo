@@ -1,0 +1,17 @@
+# Local credentials and machine-specific settings
+wechat.local.config.json
+project.private.config.json
+.env
+.env.*
+!.env.example
+
+# Dependencies, runtime caches and large local artifacts
+node_modules/
+server/.storage/
+server/.venv-sticker/
+server/.models/
+__pycache__/
+*.log
+
+# macOS metadata
+.DS_Store

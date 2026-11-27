@@ -1,0 +1,24 @@
+page { background: #f8f7fb; }
+.cat-card-page { min-height: 100vh; box-sizing: border-box; padding: calc(env(safe-area-inset-top) + 22rpx) 28rpx calc(48rpx + env(safe-area-inset-bottom)); background: linear-gradient(180deg, #b8d7ff 0, #edf4ff 34%, #f8f7fb 76%); color: #20243c; }
+.cat-card-topbar { display: flex; align-items: center; height: 100rpx; }
+.cat-card-back { display: flex; align-items: center; justify-content: center; width: 70rpx; height: 62rpx; margin: 0; padding: 0 0 6rpx; border: 3rpx solid #fff; border-radius: 999rpx; background: rgba(255,255,255,.82); color: #3d2a72; font-size: 54rpx; font-weight: 300; line-height: 54rpx; }
+.cat-card-back::after { border: 0; }
+.cat-card-topbar__copy { min-width: 0; flex: 1; margin-left: 18rpx; }
+.cat-card-eyebrow { display: block; color: #5579b8; font-size: 16rpx; letter-spacing: 3rpx; }
+.cat-card-title { display: block; margin-top: 4rpx; color: #3d2a72; font-size: 36rpx; font-weight: 850; }
+.cat-card-topbar__hint { color: #7d86a0; font-size: 19rpx; }
+.cat-card-preview { margin-top: 16rpx; overflow: hidden; border: 5rpx solid #fff; border-radius: 34rpx; background: #fff9fc; box-shadow: 0 18rpx 38rpx rgba(73,93,145,.16); }
+.cat-card-preview image { display: block; width: 100%; }
+.cat-card-loading, .cat-card-error { display: flex; align-items: center; justify-content: center; min-height: 940rpx; margin-top: 16rpx; padding: 30rpx; border: 4rpx solid #fff; border-radius: 34rpx; background: rgba(255,255,255,.82); color: #85899b; font-size: 23rpx; flex-direction: column; text-align: center; }
+.cat-card-loading__star { margin-bottom: 18rpx; color: #f66e9c; font-size: 58rpx; animation: cat-card-spin 1.2s linear infinite; }
+.cat-card-error button { margin-top: 24rpx; padding: 0 28rpx; border-radius: 999rpx; background: #f66e9c; color: #fff; font-size: 22rpx; line-height: 68rpx; }
+.cat-card-error button::after { border: 0; }
+.cat-card-actions { display: flex; gap: 16rpx; margin-top: 22rpx; }
+.cat-card-action { flex: 1; height: 78rpx; margin: 0; padding: 0; border: 3rpx solid #fff; border-radius: 26rpx; font-size: 23rpx; font-weight: 800; line-height: 72rpx; }
+.cat-card-action::after { border: 0; }
+.cat-card-action--save { background: #ffe27a; color: #3d2a72; }
+.cat-card-action--share { background: #f66e9c; color: #fff; }
+.cat-card-note { display: block; margin: 18rpx 18rpx 0; color: #969bab; font-size: 18rpx; line-height: 1.6; text-align: center; }
+.cat-card-qr-note { display: block; margin: 18rpx 18rpx 0; color: #6e5a9f; font-size: 19rpx; line-height: 1.5; text-align: center; }
+.cat-card-canvas { position: fixed; top: -2200rpx; left: -2200rpx; width: 750rpx; height: 1000rpx; opacity: 0; pointer-events: none; }
+@keyframes cat-card-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }

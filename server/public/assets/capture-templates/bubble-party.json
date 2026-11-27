@@ -1,0 +1,7 @@
+{
+  "id": "bubble-party",
+  "name": "泡泡派对",
+  "filter": "soft",
+  "beautyValues": { "natural": 44, "light": 58, "clarity": 20, "color": 62 },
+  "overlay": { "src": "https://static.missmeow.net/static/capture-overlays/bubble-party-v2.webp" }
+}

@@ -1,0 +1,86 @@
+<view class="capture-page">
+  <view class="capture-header">
+    <button class="capture-header__back" aria-label="返回" bindtap="handleBack"><view class="capture-control-sprite capture-control-sprite--back" style="background-image:url({{assets.controlStrip}});"></view></button>
+    <view class="capture-header__copy">
+      <text class="capture-header__title">喵喵相机</text>
+      <text class="capture-header__subtitle">猫咪专属美颜拍照</text>
+    </view>
+    <view class="capture-header__spacer"></view>
+  </view>
+
+  <view class="capture-camera-shell">
+    <camera wx:if="{{!previewMode && !showSettings}}" id="capture-camera" class="capture-camera filter-{{selectedFilter}}" device-position="{{devicePosition}}" flash="{{flash}}" frame-size="medium" bindinitdone="onCameraReady" binderror="onCameraError" />
+    <image wx:if="{{previewMode}}" class="capture-photo filter-{{selectedFilter}}" src="{{photoPath}}" mode="aspectFill" />
+    <cover-view wx:if="{{!previewMode && !showSettings && activeTemplateOverlay}}" class="capture-template-overlay-layer"><cover-image class="capture-template-overlay" style="{{overlayFrameStyle}}" src="{{activeTemplateOverlay.src}}" /></cover-view>
+    <image wx:if="{{previewMode && activeTemplateOverlay}}" class="capture-template-overlay capture-template-overlay--preview" style="{{overlayFrameStyle}}" src="{{activeTemplateOverlay.src}}" mode="aspectFill" />
+    <cover-view wx:if="{{!previewMode && !showSettings}}" class="capture-camera-switch" aria-label="切换摄像头" bindtap="toggleCamera"><cover-view class="capture-control-sprite capture-control-sprite--switch" style="background-image:url({{assets.controlStrip}});"></cover-view></cover-view>
+    <cover-view wx:if="{{!previewMode && !showSettings && beautyEnabled}}" class="capture-live-overlay capture-live-overlay--{{selectedFilter}}"></cover-view>
+    <view class="capture-camera-mask" wx:if="{{!previewMode && !showSettings}}"></view>
+    <view class="capture-camera-status" wx:if="{{!previewMode && !showSettings && !cameraReady}}">正在打开镜头…</view>
+    <view class="capture-camera-badge" wx:if="{{previewMode}}">已拍摄 · 可以调整后使用</view>
+    <view class="capture-camera-corner capture-camera-corner--tl"></view>
+    <view class="capture-camera-corner capture-camera-corner--tr"></view>
+    <view class="capture-camera-corner capture-camera-corner--bl"></view>
+    <view class="capture-camera-corner capture-camera-corner--br"></view>
+  </view>
+
+  <view class="capture-panel">
+    <view class="capture-summary">
+      <view class="capture-summary__icon"><image src="{{activeBeautyIcon}}" mode="aspectFit" /></view>
+      <view class="capture-summary__copy"><text class="capture-summary__title">美化已开启</text><text class="capture-summary__desc">{{activeBeautyToolName}} {{activeBeautyValue}}% · {{activeTemplate ? '已套用模板' : '自定义效果'}}</text></view>
+      <button class="capture-settings-button" bindtap="toggleSettings" disabled="{{processing}}">设置</button>
+    </view>
+
+    <view class="capture-actions">
+      <button class="capture-album" bindtap="chooseAlbum" disabled="{{processing}}"><view class="capture-control-sprite capture-control-sprite--album" style="background-image:url({{assets.controlStrip}});"></view><text>相册</text></button>
+      <button wx:if="{{!previewMode}}" class="capture-shutter" aria-label="拍摄" bindtap="capturePhoto" disabled="{{processing || !cameraReady}}"><view></view></button>
+      <button wx:if="{{previewMode}}" class="capture-confirm" bindtap="confirmPhoto" disabled="{{processing}}">{{processing ? '正在优化…' : '使用这张'}}</button>
+      <button wx:if="{{previewMode}}" class="capture-retake" bindtap="retakePhoto" disabled="{{processing}}">重拍</button>
+      <button class="capture-flash" bindtap="toggleFlash"><view class="capture-control-sprite capture-control-sprite--flash" style="background-image:url({{assets.controlStrip}});"></view><text>{{flash === 'on' ? '闪光开' : '闪光关'}}</text></button>
+    </view>
+
+    <text class="capture-privacy">照片只用于本次创作，默认私密；点击“使用这张”后会回到生成页面。</text>
+  </view>
+
+  <view wx:if="{{showSettings}}" class="capture-settings-mask" catchtap="closeSettings">
+    <view class="capture-settings-sheet" catchtap="stopTap">
+      <view class="capture-settings-head"><view><text class="capture-settings-title">喵咪美颜设置</text><text class="capture-settings-subtitle">像美图秀秀一样，给喵选一个感觉</text></view><button class="capture-settings-close" aria-label="关闭设置" bindtap="closeSettings"><image src="{{assets.close}}" mode="aspectFit" /></button></view>
+      <view class="capture-settings-tabs">
+        <button class="capture-settings-tab {{settingsTab === 'beauty' ? 'is-active' : ''}}" data-tab="beauty" bindtap="selectSettingsTab">美颜</button>
+        <button class="capture-settings-tab {{settingsTab === 'template' ? 'is-active' : ''}}" data-tab="template" bindtap="selectSettingsTab">模板</button>
+        <button class="capture-settings-tab {{settingsTab === 'filter' ? 'is-active' : ''}}" data-tab="filter" bindtap="selectSettingsTab">滤镜</button>
+      </view>
+
+      <view wx:if="{{settingsTab === 'beauty'}}" class="capture-settings-panel">
+        <view class="capture-settings-switch"><view><text class="capture-section-title">自然美化</text><text class="capture-section-desc">只调整光线、清晰度和色彩</text></view><switch color="#F66E9C" checked="{{beautyEnabled}}" bindchange="toggleBeauty" /></view>
+        <view class="capture-beauty-tools capture-settings-grid" wx:if="{{beautyEnabled}}">
+          <view wx:for="{{beautyTools}}" wx:key="id" class="capture-beauty-tool {{activeBeautyTool === item.id ? 'is-selected' : ''}}" data-tool="{{item.id}}" bindtap="selectBeautyTool">
+            <view class="capture-beauty-tool__icon"><image class="capture-beauty-tool__asset" src="{{item.icon}}" mode="aspectFit" /></view><text>{{item.name}}</text>
+          </view>
+        </view>
+        <view wx:if="{{beautyEnabled}}" class="capture-settings-level"><view class="capture-level-head"><text>正在调节 · {{activeBeautyToolName}}</text><text>{{activeBeautyValue}}%</text></view><view class="capture-level"><text>{{activeBeautyMinLabel}}</text><slider min="0" max="100" value="{{activeBeautyValue}}" activeColor="#F66E9C" backgroundColor="#E7E9F2" block-color="#FFFFFF" block-size="22" bindchanging="onBeautyChanging" bindchange="onBeautyChanging" /><text>{{activeBeautyMaxLabel}}</text></view></view>
+      </view>
+
+      <view wx:if="{{settingsTab === 'template'}}" class="capture-settings-panel">
+        <view class="capture-settings-section-head capture-settings-section-head--first"><text>喵喵模板</text><text>{{downloadedTemplateCount}} 个已下载</text></view>
+        <view class="capture-template-grid">
+          <view wx:for="{{templates}}" wx:key="id" class="capture-template {{activeTemplate === item.id ? 'is-active' : ''}} {{item.downloaded ? 'is-downloaded' : ''}}" data-template="{{item.id}}" bindtap="useTemplate">
+            <view class="capture-template__image"><image class="capture-template__asset" src="{{item.icon}}" mode="aspectFill" /><view wx:if="{{templateDownloading === item.id}}" class="capture-template__progress"><view class="capture-template__progress-ring" style="{{templateProgressStyle}}"><view class="capture-template__progress-hole"><text>{{templateProgress}}%</text></view></view></view></view>
+            <text class="capture-template__name">{{item.name}}</text><text class="capture-template__status">{{templateDownloading === item.id ? (templateProgress + '%') : (item.downloaded ? '已下载 · 使用' : '点击下载')}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{settingsTab === 'filter'}}" class="capture-settings-panel">
+        <view class="capture-settings-section-head capture-settings-section-head--first"><text>滤镜</text><text>{{selectedFilter === 'natural' ? '原色' : '已选择'}}</text></view>
+        <view class="capture-filter-grid">
+          <view wx:for="{{filters}}" wx:key="id" class="capture-filter {{selectedFilter === item.id ? 'is-selected' : ''}}" data-filter="{{item.id}}" bindtap="selectFilter"><view class="capture-filter__preview"><image src="{{item.icon}}" mode="aspectFit" /></view><text>{{item.name}}</text></view>
+        </view>
+      </view>
+      <button class="capture-settings-done" bindtap="closeSettings">完成</button>
+    </view>
+  </view>
+
+  <canvas canvas-id="capture-canvas" class="capture-canvas"></canvas>
+  <view wx:if="{{error}}" class="capture-error">{{error}}</view>
+</view>

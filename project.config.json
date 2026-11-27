@@ -1,0 +1,123 @@
+{
+  "description": "言喵人猫关系 AI 创作微信小程序",
+  "packOptions": {
+    "ignore": [
+      {
+        "value": "产品成型记录",
+        "type": "folder"
+      },
+      {
+        "value": "产品品牌logo背景",
+        "type": "folder"
+      },
+      {
+        "value": "设计skill",
+        "type": "folder"
+      },
+      {
+        "value": "README.md",
+        "type": "file"
+      },
+      {
+        "value": "docs",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/assets/models",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/libs/three.min.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/libs/threejs-miniprogram.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/libs/gltf-loader.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/utils/cat3d.js",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/assets/yanmiao-cat-blink.gif",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/assets/brand-logo.png",
+        "type": "file"
+      },
+      {
+        "value": "assets/models",
+        "type": "folder"
+      },
+      {
+        "value": "libs/three.min.js",
+        "type": "file"
+      },
+      {
+        "value": "libs/threejs-miniprogram.js",
+        "type": "file"
+      },
+      {
+        "value": "libs/gltf-loader.js",
+        "type": "file"
+      },
+      {
+        "value": "utils/cat3d.js",
+        "type": "file"
+      },
+      {
+        "value": "assets/yanmiao-cat-blink.gif",
+        "type": "file"
+      },
+      {
+        "value": "assets/brand-logo.png",
+        "type": "file"
+      }
+    ],
+    "include": []
+  },
+  "setting": {
+    "compileHotReLoad": true,
+    "es6": true,
+    "enhance": true,
+    "minified": true,
+    "postcss": true,
+    "urlCheck": false,
+    "coverView": true,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.8.10",
+  "appid": "wxed86513ed5ffc983",
+  "projectname": "yanmiao-miniapp",
+  "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "simulatorType": "wechat",
+  "condition": {},
+  "simulatorPluginLibVersion": {},
+  "editorSetting": {}
+}

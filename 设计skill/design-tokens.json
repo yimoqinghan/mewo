@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Miss Meow MEOW POP",
+  "version": "1.0.0",
+  "note": "Approximate engineering tokens inferred from approved concept reference; not pixel-exact sampling.",
+  "brand": {"name": "言喵", "english": "MISS MEOW", "slogan": "和猫一起，把日子过得可爱一点。"},
+  "colors": {
+    "page": "#F8F7FB", "surface": "#FFFFFF", "sky": "#B8D7FF", "skyStrong": "#78B4FB",
+    "creamYellow": "#FFE27A", "pink": "#F5A9C9", "rose": "#F66E9C", "navy": "#20243C",
+    "cobalt": "#2557D6", "textSecondary": "#85899B", "border": "#EEF0F8"
+  },
+  "colorUsage": {"neutralPercent": "60-70", "blueAndInkPercent": "20-30", "pinkAndYellowAccentMaxPercent": 10},
+  "typography": {
+    "fontFamilyZH": "system-ui, -apple-system, PingFang SC, Microsoft YaHei, sans-serif",
+    "brandPx": [21,24], "heroDisplayPx": [30,42], "sectionHeadingPx": [16,18],
+    "cardHeadingPx": [13,15], "bodyPx": [12,14], "captionPx": [10,12]
+  },
+  "radiiPx": {"hero": 28, "card": 18, "button": 16, "pill": 999},
+  "spacingPx": [4,8,12,16,24,32],
+  "layout": {"horizontalPaddingPx": 20, "mainCTAmaxCount": 2, "quickActionMaxCount": 3},
+  "motion": {"blinkIntervalSec": [5,9], "microMotionMs": [300,800], "tailCycleSec": [2,4]},
+  "mascot": {"species": "black cat", "eyes": "large round golden yellow", "innerEars": "pink", "pose": "peek from pastel pink paper box", "paws": "over box edge"}
+}

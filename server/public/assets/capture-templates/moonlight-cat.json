@@ -1,0 +1,6 @@
+{
+  "id": "moonlight-cat",
+  "name": "月光喵",
+  "filter": "film",
+  "beautyValues": { "natural": 24, "light": 22, "clarity": 48, "color": 46 }
+}

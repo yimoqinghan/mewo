@@ -1,0 +1,7 @@
+{
+  "id": "rainbow-bow",
+  "name": "彩虹蝴蝶结",
+  "filter": "soft",
+  "beautyValues": { "natural": 50, "light": 64, "clarity": 18, "color": 70 },
+  "overlay": { "src": "https://static.missmeow.net/static/capture-overlays/rainbow-bow-v2.webp" }
+}

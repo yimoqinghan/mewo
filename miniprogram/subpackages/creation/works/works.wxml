@@ -1,0 +1,49 @@
+<view class="page works-page">
+  <view class="topbar">
+    <view>
+      <text class="page-title">喵作集</text>
+      <text class="page-subtitle">把和它一起的可爱，慢慢收进来。</text>
+    </view>
+    <button class="add-button" bindtap="goCreate">＋ 去创作</button>
+  </view>
+
+  <view class="library-summary"><view><text class="library-summary__eyebrow">MEOW CREATIONS</text><text class="library-summary__title">只属于你和猫咪的喵作</text></view><text class="library-summary__count">{{works.length}}<text> 份</text></text></view>
+
+  <scroll-view class="works-filter" scroll-x enhanced show-scrollbar="{{false}}" bounces="{{false}}">
+    <view class="works-filter__inner">
+      <button wx:for="{{categories}}" wx:key="id" class="category-chip {{selectedCategory === item.id ? 'category-chip--active' : ''}}" data-category="{{item.id}}" bindtap="selectCategory">
+        <text>{{item.label}}</text><text class="category-chip__count">{{item.count}}</text>
+      </button>
+    </view>
+  </scroll-view>
+
+  <view class="works-list" wx:if="{{filteredWorks.length}}">
+    <view class="work-card" wx:for="{{filteredWorks}}" wx:key="id">
+      <view class="work-card__media">
+        <video wx:if="{{item.isVideo}}" class="work-card__video" src="{{item.image}}" controls="{{true}}" object-fit="cover" data-id="{{item.id}}" bindtap="openWork" />
+        <image wx:else class="work-card__image {{item.imageReady ? 'work-card__image--ready' : ''}}" src="{{item.image}}" mode="aspectFill" lazy-load="{{true}}" data-id="{{item.id}}" bindload="handleWorkImageLoad" binderror="handleWorkImageError" bindtap="openWork" />
+        <view wx:if="{{!item.isVideo && (!item.imageReady || item.imageError)}}" class="work-card__placeholder {{item.imageError ? 'work-card__placeholder--error' : ''}}">
+          <image class="work-card__placeholder-cat" src="{{assets.menuCat}}" mode="aspectFit" />
+          <view class="work-card__placeholder-glow"></view>
+          <text>{{item.imageError ? '图片暂时无法加载' : '正在加载作品'}}</text>
+        </view>
+      </view>
+      <view class="work-card__body">
+        <view class="work-card__meta">
+          <text class="work-card__category">{{item.categoryLabel}}</text>
+          <text>{{item.catName}}</text>
+        </view>
+        <text class="work-card__time">生成于 {{item.createdAtLabel}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{loadingMore}}" class="works-more">正在加载更多作品…</view>
+  <view wx:elif="{{hasMore}}" class="works-more">上拉加载更多</view>
+
+  <view class="empty-state" wx:if="{{!filteredWorks.length}}">
+    <text class="empty-title">{{works.length ? '这个分类还没有喵作' : '喵作还空着'}}</text>
+    <text class="empty-desc">{{works.length ? '换一个分类看看，或者继续为猫咪创作。' : '拍一张照片，给它做一张专属小贴纸。'}}</text>
+    <button class="primary-button" bindtap="goCreate">开始第一次创作</button>
+  </view>
+</view>
+<bottom-nav active="works" />

@@ -1,0 +1,102 @@
+<view class="translator-page">
+  <view class="translator-topbar">
+    <button class="translator-back" aria-label="返回" bindtap="back">‹</button>
+    <view class="translator-heading">
+      <text class="translator-eyebrow">MEOW TRANSLATOR</text>
+      <text class="translator-title">猫咪翻译</text>
+    </view>
+    <image class="translator-top-icon" src="{{assets.translator}}" mode="aspectFit" />
+  </view>
+
+  <scroll-view class="translator-scroll" scroll-y enhanced show-scrollbar="{{false}}" bounces="{{false}}">
+    <view class="translator-intro">
+      <image class="translator-intro__icon" src="{{assets.translator}}" mode="aspectFit" />
+      <view class="translator-intro__copy">
+        <text class="translator-intro__title">听动作，也听喵声</text>
+        <text class="translator-intro__desc">拍一段猫咪视频，让 AI 帮你读懂这一刻的小心思。</text>
+      </view>
+    </view>
+
+    <view class="direction-tabs">
+      <button class="direction-tab {{direction === 'cat-to-human' ? 'direction-tab--active' : ''}}" data-direction="cat-to-human" bindtap="switchDirection">看动作</button>
+      <button class="direction-tab {{direction === 'cat-audio' ? 'direction-tab--active' : ''}}" data-direction="cat-audio" bindtap="switchDirection">听喵声</button>
+      <button class="direction-tab {{direction === 'human-to-cat' ? 'direction-tab--active' : ''}}" data-direction="human-to-cat" bindtap="switchDirection">说给喵听</button>
+    </view>
+
+    <view wx:if="{{direction === 'cat-to-human'}}" class="video-card">
+      <image wx:if="{{imagePath}}" class="video-card__image" src="{{imagePath}}" mode="aspectFill" />
+      <video wx:elif="{{videoPath}}" id="translator-video" class="video-card__player" src="{{videoPath}}" controls="{{true}}" show-center-play-btn="{{true}}" object-fit="cover" />
+      <view wx:else class="video-card__empty">
+        <image src="{{assets.translator}}" mode="aspectFit" />
+        <text>{{mediaKind === 'image' ? '先拍一张猫咪动作照片' : '先拍一段 3–30 秒的小视频'}}</text>
+        <text class="video-card__hint">动作、尾巴、姿态，都可以成为线索</text>
+      </view>
+      <button wx:if="{{(videoPath || imagePath) && status !== 'analyzing'}}" class="video-card__remove" bindtap="removeVideo">{{imagePath ? '换一张' : '换一段'}}</button>
+      <view wx:if="{{videoPath || imagePath}}" class="video-card__meta"><text>{{imagePath ? '已选照片' : (videoDuration ? videoDuration + ' 秒' : '已选视频')}}</text><text>仅自己可见</text></view>
+    </view>
+
+    <view wx:if="{{direction === 'cat-to-human' && status !== 'analyzing'}}" class="source-actions">
+      <view class="media-kind-tabs">
+        <button class="media-kind-tab {{mediaKind === 'video' ? 'media-kind-tab--active' : ''}}" data-kind="video" bindtap="switchMediaKind">视频</button>
+        <button class="media-kind-tab {{mediaKind === 'image' ? 'media-kind-tab--active' : ''}}" data-kind="image" bindtap="switchMediaKind">照片</button>
+      </view>
+      <button wx:if="{{mediaKind === 'video'}}" class="source-action" data-source="camera" bindtap="pickVideo"><image src="{{assets.camera}}" mode="aspectFit" /><text>拍一段</text></button>
+      <button wx:if="{{mediaKind === 'video'}}" class="source-action" data-source="album" bindtap="pickVideo"><image src="{{assets.album}}" mode="aspectFit" /><text>从相册选视频</text></button>
+      <button wx:if="{{mediaKind === 'image'}}" class="source-action" data-source="camera" bindtap="pickImage"><image src="{{assets.camera}}" mode="aspectFit" /><text>拍一张</text></button>
+      <button wx:if="{{mediaKind === 'image'}}" class="source-action" data-source="album" bindtap="pickImage"><image src="{{assets.album}}" mode="aspectFit" /><text>从相册选照片</text></button>
+    </view>
+
+    <button wx:if="{{direction === 'cat-to-human'}}" class="analyze-button {{(!videoPath && !imagePath) || status === 'analyzing' ? 'analyze-button--disabled' : ''}}" disabled="{{(!videoPath && !imagePath) || status === 'analyzing'}}" bindtap="analyze">
+      {{status === 'analyzing' ? '正在观察…' : '开始翻译'}}
+    </button>
+
+    <view wx:if="{{direction === 'cat-audio'}}" class="audio-capture-card">
+      <image src="{{assets.translator}}" mode="aspectFit" />
+      <text class="audio-capture-card__title">录一声喵，听听它想说什么</text>
+      <text class="audio-capture-card__desc">建议录 3–15 秒，环境安静一些，喵声会更容易被听见。</text>
+      <button class="record-button {{audioStatus === 'recording' ? 'record-button--recording' : ''}}" bindtap="recordMeow">{{audioStatus === 'recording' ? '点击结束录音' : audioStatus === 'analyzing' ? '正在听喵声…' : '开始录喵声'}}</button>
+      <text wx:if="{{audioStatus === 'error'}}" class="inline-error">{{audioError}}</text>
+    </view>
+
+    <view wx:if="{{direction === 'human-to-cat'}}" class="speech-capture-card">
+      <view class="speech-capture-card__head"><text class="speech-capture-card__title">想对喵说什么？</text><text class="speech-capture-card__hint">文字或语音都可以</text></view>
+      <textarea class="speech-input" value="{{humanText}}" maxlength="240" placeholder="例如：今天想不想和我玩一会儿？" bindinput="onHumanInput" />
+      <view class="speech-actions"><button class="record-speech" bindtap="recordHuman">{{recordingHuman ? '点击结束录音' : '按住说话'}}</button><button class="speech-submit" disabled="{{!humanText || speechStatus === 'creating'}}" bindtap="createSpeech">{{speechStatus === 'creating' ? '正在变成喵语…' : '翻成喵语'}}</button></view>
+      <text wx:if="{{speechError}}" class="inline-error">{{speechError}}</text>
+    </view>
+
+    <view wx:if="{{status === 'analyzing'}}" class="status-card">
+      <image src="{{assets.translator}}" mode="aspectFit" />
+      <view><text class="status-card__title">正在观察{{imagePath ? '这张照片' : '这段视频'}}</text><text class="status-card__desc">会结合动作和姿态给出一份轻松的喵语解读</text></view>
+    </view>
+
+    <view wx:if="{{status === 'error'}}" class="error-card">
+      <text>{{error}}</text>
+      <button bindtap="retry">重新分析</button>
+    </view>
+
+    <view wx:if="{{status === 'success' && result}}" class="result-card">
+      <view class="result-card__head"><view><text class="result-card__eyebrow">TRANSLATION RESULT</text><text class="result-card__title">{{result.title}}</text></view><view class="confidence"><text>{{result.confidence}}%</text><text>把握度</text></view></view>
+      <text class="result-summary">{{result.summary}}</text>
+      <view class="signal-list"><view wx:for="{{result.signals}}" wx:key="label" class="signal-row"><text class="signal-row__label">{{item.label}}</text><text class="signal-row__value">{{item.value}}</text></view></view>
+      <view class="suggestion"><text class="suggestion__label">可以试试</text><text>{{result.suggestion}}</text></view>
+      <text class="result-disclaimer">{{result.disclaimer}}</text>
+    </view>
+
+    <view wx:if="{{direction === 'cat-audio' && audioStatus === 'success' && audioResult}}" class="result-card">
+      <view class="result-card__head"><view><text class="result-card__eyebrow">MEOW SOUND</text><text class="result-card__title">{{audioResult.title}}</text></view><view class="confidence"><text>{{audioResult.confidence}}%</text><text>把握度</text></view></view>
+      <text class="result-summary">{{audioResult.summary}}</text>
+      <view class="signal-list"><view wx:for="{{audioResult.signals}}" wx:key="label" class="signal-row"><text class="signal-row__label">{{item.label}}</text><text class="signal-row__value">{{item.value}}</text></view></view>
+      <view class="suggestion"><text class="suggestion__label">可以试试</text><text>{{audioResult.suggestion}}</text></view>
+      <text class="result-disclaimer">{{audioResult.disclaimer}}</text>
+    </view>
+
+    <view wx:if="{{direction === 'human-to-cat' && speechStatus === 'success' && speech}}" class="speech-result-card">
+      <text class="result-card__eyebrow">MEOW SPEECH</text>
+      <text class="speech-result-card__text">{{speech.text}}</text>
+      <text class="speech-result-card__meaning">{{speech.meaning}}</text>
+      <button class="play-speech {{isPlaying ? 'play-speech--playing' : ''}}" bindtap="toggleSpeech">{{isPlaying ? '暂停喵声' : '播放给喵听'}}</button>
+      <text class="result-disclaimer">{{speech.disclaimer}}</text>
+    </view>
+  </scroll-view>
+</view>

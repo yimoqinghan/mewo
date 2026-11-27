@@ -1,0 +1,33 @@
+<view class="special-templates-page">
+  <view class="templates-topbar">
+    <button class="back-button" bindtap="back">‹</button>
+    <view><text class="templates-eyebrow">言喵 · 创作模板</text><text class="templates-title">{{title}}</text></view>
+    <image class="templates-cat" src="{{assets.menuCat}}" mode="aspectFit" />
+  </view>
+  <text class="templates-subtitle">{{subtitle}}</text>
+  <view class="templates-note" wx:if="{{videoMode}}"><text>成品由短视频模型真实生成</text><text>先选一个故事方向，返回后再上传照片开始创作。</text></view>
+  <view wx:if="{{loading}}" class="template-list template-list--loading">
+    <view wx:for="{{skeletonItems}}" wx:key="*this" class="template-card template-card--skeleton">
+      <view class="template-skeleton__image template-loading-placeholder"><image src="{{assets.menuCat}}" mode="aspectFit" /><view class="template-loading-placeholder__glow"></view></view>
+      <view class="template-skeleton__line template-skeleton__line--title"></view>
+      <view class="template-skeleton__line template-skeleton__line--desc"></view>
+      <view class="template-skeleton__button"></view>
+    </view>
+  </view>
+  <view wx:else class="template-list">
+    <view wx:for="{{skills}}" wx:key="id" class="template-card {{item.id === selectedSkillId ? 'selected' : ''}}">
+      <view wx:if="{{item.example}}" class="template-image-wrap">
+        <block wx:if="{{videoMode}}">
+          <image wx:if="{{previewingVideoId !== item.id}}" class="template-video-poster" src="{{item.poster}}" mode="aspectFill" data-id="{{item.id}}" bindload="onExampleLoad" bindtap="toggleVideoPreview" />
+          <video wx:else class="template-video" src="{{item.stream}}" poster="{{item.poster}}" autoplay="{{true}}" loop="{{true}}" muted="{{true}}" controls="{{true}}" show-center-play-btn="{{true}}" show-loading="{{true}}" object-fit="cover" />
+          <view wx:if="{{previewingVideoId !== item.id}}" class="template-play-button" data-id="{{item.id}}" bindtap="toggleVideoPreview">▶</view>
+        </block>
+        <image wx:else class="template-image" src="{{item.example}}" mode="widthFix" bindload="onExampleLoad" data-id="{{item.id}}" />
+        <view wx:if="{{!item.imageReady}}" class="template-loading-placeholder"><image src="{{assets.menuCat}}" mode="aspectFit" /><view class="template-loading-placeholder__glow"></view></view>
+        <view wx:if="{{!videoMode}}" class="image-tip" aria-label="放大查看示例"></view>
+      </view>
+      <view wx:else class="template-placeholder"><text class="template-placeholder__mark">{{videoMode ? '▶' : 'GIF'}}</text><text>{{videoMode ? '真实短视频模型生成' : '真实 GIF 模型生成'}}</text></view>
+      <view class="template-card__body"><view class="template-card__copy"><text class="template-card__name">{{item.name}}</text><text class="template-card__desc">{{item.desc}}</text><text wx:if="{{videoMode && item.duration}}" class="template-card__duration">默认 {{item.duration}} 秒</text></view><button class="template-card__choose {{item.id === selectedSkillId ? 'on' : ''}}" data-id="{{item.id}}" bindtap="chooseSkill">{{item.id === selectedSkillId ? '已选择' : '使用模板'}}</button></view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "id": "candy-cat",
+  "name": "糖果喵",
+  "filter": "cool",
+  "beautyValues": { "natural": 45, "light": 32, "clarity": 22, "color": 72 }
+}

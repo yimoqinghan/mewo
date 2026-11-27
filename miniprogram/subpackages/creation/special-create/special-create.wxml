@@ -1,0 +1,82 @@
+<view class="special-page">
+  <view class="special-topbar">
+    <button class="back-button" bindtap="back">‹</button>
+    <view><text class="topbar__eyebrow">MEOW STUDIO</text><text class="topbar__title">{{title}}</text></view>
+    <image class="topbar__cat" src="{{assets.menuCat}}" mode="aspectFit" />
+  </view>
+  <text class="special-subtitle">{{subtitle}}</text>
+  <view wx:if="{{availabilityNote}}" class="availability-note">{{availabilityNote}}</view>
+
+    <view class="creation-mode-card">
+    <view><text class="section-title">怎么创作</text><text class="section-hint">先选一种方式，下面只展示需要填写的内容</text></view>
+    <view class="creation-mode-switch"><view class="creation-mode-option {{creationMode === 'template' ? 'creation-mode-option--active' : ''}}" data-mode="template" bindtap="selectCreationMode"><text>热门玩法</text><text>选一个就能生成</text></view><view class="creation-mode-option {{creationMode === 'custom' ? 'creation-mode-option--active' : ''}}" data-mode="custom" bindtap="selectCreationMode"><text>自定义描述</text><text>自己决定动作和剧情</text></view></view>
+  </view>
+
+  <view class="source-card">
+    <view class="source-card__head"><view><text class="section-title">添加一张参考照片</text><text wx:if="{{currentCat}}" class="section-hint">{{currentCat.name}} 的档案照片已自动选中，也可以换一张</text><text wx:else class="section-hint">可以从相册选择，或现场拍一张</text></view></view>
+    <view wx:if="{{!currentCat}}" class="no-cat-note">还没有喵档案，也可以先上传一张照片直接创作。</view>
+    <view wx:if="{{sourcePath}}" class="source-selected-preview"><image src="{{sourcePath}}" mode="aspectFit" /><text>当前参考图</text></view>
+    <view class="source-actions">
+      <button class="source-action source-action--album" bindtap="chooseFromAlbum"><image class="source-action__icon" src="{{assets.albumIcon}}" mode="aspectFit" /><view class="source-action__copy"><text>相册选图</text></view><text class="source-action__arrow">›</text></button>
+      <button class="source-action source-action--camera" bindtap="takePhoto"><image class="source-action__icon" src="{{assets.cameraIcon}}" mode="aspectFit" /><view class="source-action__copy"><text>拍一张</text></view><text class="source-action__arrow">›</text></button>
+    </view>
+  </view>
+
+  <view wx:if="{{videoMode}}" class="video-control-card">
+    <view class="video-control-card__head"><view><text class="section-title">选择视频模型</text><text class="section-hint">接入视频排行前 5，照片和模型密钥都由服务端保护</text></view><text class="video-control-card__badge">P0.5</text></view>
+    <scroll-view class="video-model-scroll" scroll-x enhanced show-scrollbar="{{false}}" bounces="{{false}}">
+      <view class="video-model-list">
+        <view wx:for="{{videoModels}}" wx:key="id" class="video-model-chip {{selectedVideoModelId === item.id ? 'video-model-chip--active' : ''}} {{item.requiresVideoInput ? 'video-model-chip--disabled' : ''}}" data-id="{{item.id}}" bindtap="selectVideoModel"><text class="video-model-chip__rank">{{index + 1}}</text><text class="video-model-chip__name">{{item.label}}</text><text class="video-model-chip__tag">{{item.requiresVideoInput ? '视频增强' : '照片生视频'}}</text></view>
+      </view>
+    </scroll-view>
+    <view class="video-duration-row"><text class="video-duration-label">目标时长</text><view class="video-duration-list"><view wx:for="{{durationOptions}}" wx:key="*this" class="video-duration-chip {{duration === item ? 'video-duration-chip--active' : ''}}" data-duration="{{item}}" bindtap="selectDuration">{{item}}秒</view></view></view>
+    <text class="video-duration-note">{{durationNote}}</text>
+  </view>
+
+  <view wx:if="{{creationMode === 'custom' || type === 'emoji'}}" class="caption-card">
+    <view class="caption-card__head"><view><text class="section-title">{{videoMode ? '描述喵的动作和剧情' : (type === 'emoji' ? (creationMode === 'template' ? '给模板配一句话' : '描述你想表达的情绪') : '描述动作和小剧情')}}</text><text class="section-hint">{{videoMode ? '例如：喵背包出门，回头挥爪，再对镜头眨眼' : (type === 'emoji' ? '这句话会成为表情里的核心文字' : '例如：先看镜头，再拿起小包出门，最后回头眨眼')}}</text></view><text class="caption-required" wx:if="{{type === 'emoji'}}">必填</text></view>
+    <textarea class="caption-input" value="{{caption}}" maxlength="40" placeholder="{{type === 'emoji' ? '例如：好耶！今天也要可爱营业' : '例如：喵一下，尾巴摇起来'}}" bindinput="onCaptionInput" />
+    <view class="caption-footer"><text>{{captionCount}} / 40</text><button wx:if="{{type === 'emoji' && creationMode === 'template'}}" bindtap="useSkillText">换成模板文字</button></view>
+  </view>
+
+  <view wx:if="{{type === 'emoji'}}" class="mode-card">
+    <view><text class="section-title">表情形式</text><text class="section-hint">可以生成静态图，也可以生成会动的表情</text></view>
+    <view class="mode-switch"><view class="mode-option {{emojiMode === 'static' ? 'mode-option--active' : ''}}" data-mode="static" bindtap="selectEmojiMode">静态图</view><view class="mode-option {{emojiMode === 'animated' ? 'mode-option--active' : ''}}" data-mode="animated" bindtap="selectEmojiMode">动图</view></view>
+  </view>
+
+  <view wx:if="{{creationMode === 'template'}}" class="template-entry-card">
+    <view class="template-entry-card__head" bindtap="openTemplatePicker">
+      <view class="template-entry-card__heading"><text class="section-title">选择创作模板</text><text class="template-entry-card__subhead">先选一个故事方向，再开始生成</text></view>
+      <view class="template-entry-card__meta"><view class="template-entry-card__count"><text class="template-entry-card__count-number">{{skills.length}}</text><text>个玩法</text></view><text class="template-entry-card__arrow">›</text></view>
+    </view>
+    <view wx:if="{{selectedSkill}}" class="template-selected-preview"><view wx:if="{{selectedSkill.example}}" class="template-selected-preview__image-wrap" data-id="{{selectedSkill.id}}" bindtap="previewSkill"><image class="template-selected-preview__image" src="{{videoMode ? selectedSkill.poster : selectedSkill.example}}" mode="aspectFill" /></view><view wx:else class="template-selected-preview__fallback"><text>{{videoMode ? '短视频' : 'GIF'}}</text></view><view class="template-selected-preview__copy"><text>{{selectedSkill.name}}</text><text>{{selectedSkill.desc}}</text></view></view>
+  </view>
+
+  <view class="preview-card">
+    <view class="preview-card__head"><text class="section-title">{{phase === 'success' ? statusText : '生成结果'}}</text><text class="preview-label">{{phase === 'success' ? '点击图片查看大图' : '生成后会显示在这里'}}</text></view>
+    <view class="preview-stage">
+      <video wx:if="{{phase === 'success' && resultPath && videoMode}}" class="generated-video" src="{{resultMedia.hlsUrl || resultPath}}" controls="{{true}}" autoplay="{{false}}" loop="{{true}}" object-fit="contain" show-center-play-btn="{{true}}" />
+      <image wx:elif="{{phase === 'success' && resultPath}}" class="generated-media {{type === 'gif' || emojiMode === 'animated' ? 'generated-media--gif' : ''}}" src="{{resultPath}}" mode="aspectFit" bindtap="previewResult" show-menu-by-longpress="true" />
+      <view wx:elif="{{phase === 'generating'}}" class="preview-generating-empty"><text>结果正在这里生成</text><text>生成完成后会自动保存到喵作</text></view>
+      <view wx:else class="preview-empty"><text>还没有生成结果</text><text>{{videoMode ? '选一个方向或写下喵的剧情，再开始创作' : '先写下想表达的话，再开始创作'}}</text></view>
+      <generation-loading wx:if="{{phase === 'generating'}}" variant="overlay" status-text="{{statusText}}" subtitle="小猫正在认真准备，不是静态摇摆哦" stage-label="{{progressStage}}" progress-hint="{{progressHint}}" progress="{{progress}}" />
+      <text wx:if="{{phase === 'success' && videoMode}}" class="gif-loop-mark">视频</text>
+      <text wx:elif="{{phase === 'success' && (type === 'gif' || emojiMode === 'animated')}}" class="gif-loop-mark">动图</text>
+    </view>
+    <view wx:if="{{phase === 'success'}}" class="result-actions">
+      <button bindtap="downloadResult" disabled="{{actionBusy}}">{{videoMode ? '保存视频' : '保存到相册'}}</button>
+      <button bindtap="shareResult" disabled="{{actionBusy}}">{{videoMode ? '分享视频' : '分享这张'}}</button>
+      <button wx:if="{{videoMode}}" bindtap="openVideoFeed">全屏播放</button>
+    </view>
+    <view wx:if="{{phase === 'success'}}" class="result-save-state">
+      <text wx:if="{{saved}}">✓ 已保存到喵作</text>
+      <text wx:elif="{{saving}}">正在保存到喵作…</text>
+      <button wx:else bindtap="saveResult" disabled="{{saving}}">保存到喵作</button>
+    </view>
+  </view>
+
+  <view wx:if="{{error}}" class="error-text">{{error}}</view>
+  <button wx:if="{{phase !== 'success'}}" class="generate-button" bindtap="generate" disabled="{{phase === 'generating' || !modelReady}}">{{phase === 'generating' ? statusText : (!modelReady ? '暂时无法生成' : (videoMode ? '生成喵视频' : (type === 'gif' ? '生成动图' : (emojiMode === 'animated' ? '生成动图表情' : '生成表情'))))}}</button>
+  <button wx:else class="generate-button generate-button--retry" bindtap="retry">重新创作</button>
+  <text class="privacy-note">照片和作品默认只对你可见</text>
+</view>

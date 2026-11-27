@@ -1,0 +1,173 @@
+.bottom-nav {
+  position: fixed;
+  z-index: 20;
+  right: 20rpx;
+  bottom: calc(env(safe-area-inset-bottom) + 18rpx);
+  left: 20rpx;
+  display: flex;
+  height: 118rpx;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10rpx;
+  border: 3rpx solid rgba(255, 255, 255, .96);
+  border-radius: 42rpx;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(242, 247, 255, .93));
+  box-shadow: 0 18rpx 38rpx rgba(73, 93, 145, .2), inset 0 3rpx 0 #fff;
+  backdrop-filter: blur(22px) saturate(120%);
+  -webkit-backdrop-filter: blur(22px) saturate(120%);
+}
+
+.bottom-nav__item {
+  display: flex;
+  width: 116rpx;
+  height: 92rpx;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 3rpx solid transparent;
+  border-radius: 30rpx;
+  color: #77819a;
+  transition: transform .24s ease, background .24s ease, box-shadow .24s ease;
+}
+
+.bottom-nav__item--active {
+  position: relative;
+  height: 148rpx;
+  border-color: transparent;
+  background: transparent;
+  color: #3d2a72;
+  box-shadow: none;
+  transform: translateY(-27rpx);
+}
+
+.bottom-nav__icon {
+  display: block;
+  width: 66rpx;
+  height: 66rpx;
+  opacity: .68;
+  filter: saturate(.78);
+  transition: transform .24s ease, opacity .24s ease, filter .24s ease;
+}
+
+.bottom-nav__item--active .bottom-nav__icon {
+  width: 112rpx;
+  height: 112rpx;
+  box-sizing: border-box;
+  padding: 10rpx;
+  border: 5rpx solid #fff;
+  border-radius: 42% 58% 52% 48%;
+  background: linear-gradient(145deg, #ff94b8, #f15f93);
+  opacity: 1;
+  filter: saturate(1.08) drop-shadow(0 12rpx 12rpx rgba(246, 110, 156, .34));
+  transform: translateY(0);
+}
+
+.bottom-nav__label {
+  margin-top: 5rpx;
+  font-size: 18rpx;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.bottom-nav__item--active .bottom-nav__label {
+  position: absolute;
+  bottom: -3rpx;
+  margin-top: 0;
+  padding: 7rpx 16rpx;
+  border: 3rpx solid rgba(255, 255, 255, .95);
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 5rpx 12rpx rgba(73, 93, 145, .14);
+  color: #3d2a72;
+  font-size: 18rpx;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.bottom-nav__create {
+  display: flex;
+  width: 136rpx;
+  height: 92rpx;
+  align-items: center;
+  flex-direction: column;
+  color: #77819a;
+  transition: transform .24s ease, height .24s ease;
+}
+
+.bottom-nav__create-button {
+  position: relative;
+  display: flex;
+  width: 66rpx;
+  height: 66rpx;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+}
+
+.bottom-nav__create-button::after {
+  display: none;
+}
+
+.bottom-nav__create-icon {
+  display: block;
+  width: 66rpx;
+  height: 66rpx;
+  filter: saturate(.78);
+  transition: width .24s ease, height .24s ease, filter .24s ease;
+}
+
+.bottom-nav__create-label {
+  margin-top: 5rpx;
+  color: #77819a;
+  font-size: 18rpx;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.bottom-nav__create--active {
+  height: 148rpx;
+  transform: translateY(-27rpx);
+  color: #3d2a72;
+}
+
+.bottom-nav__create--active .bottom-nav__create-button {
+  width: 112rpx;
+  height: 112rpx;
+  border: 5rpx solid #fff;
+  border-radius: 42% 58% 52% 48%;
+  background: linear-gradient(145deg, #ff94b8, #f15f93);
+  box-shadow: 0 12rpx 22rpx rgba(246, 110, 156, .34), inset 0 3rpx 0 rgba(255, 255, 255, .56);
+}
+
+.bottom-nav__create--active .bottom-nav__create-button::after {
+  position: absolute;
+  right: 12rpx;
+  bottom: 10rpx;
+  display: block;
+  width: 18rpx;
+  height: 18rpx;
+  border: 4rpx solid #ffe27a;
+  border-radius: 50%;
+  content: '';
+}
+
+.bottom-nav__create--active .bottom-nav__create-icon {
+  width: 92rpx;
+  height: 92rpx;
+  filter: drop-shadow(0 7rpx 9rpx rgba(90, 44, 93, .2));
+}
+
+.bottom-nav__create--active .bottom-nav__create-label {
+  margin-top: 10rpx;
+  padding: 7rpx 16rpx;
+  border: 3rpx solid rgba(255, 255, 255, .95);
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 5rpx 12rpx rgba(73, 93, 145, .14);
+  color: #3d2a72;
+  font-weight: 900;
+}

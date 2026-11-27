@@ -1,0 +1,75 @@
+<view class="page edit-page">
+  <view class="form-intro">
+    <text class="page-title">{{editingId ? '编辑猫咪档案' : '给小主角建档'}}</text>
+    <text class="page-subtitle">以后每张贴纸、每个故事，都会认得它。</text>
+  </view>
+
+  <view class="avatar-picker">
+    <image src="{{assets.brandCat}}" mode="aspectFill" />
+    <text>多留几张它的照片，言喵会更懂它的样子和小脾气。</text>
+  </view>
+
+  <view class="photo-field">
+    <view class="photo-field__head">
+      <view><text class="field__label">猫咪照片</text><text class="photo-field__hint">最多 9 张，点照片可设为封面</text></view>
+      <text class="photo-field__count">{{photos.length}} / 9</text>
+    </view>
+    <view class="photo-grid">
+      <view wx:for="{{photos}}" wx:key="id" class="photo-tile {{item.isCover ? 'photo-tile--cover' : ''}}" data-index="{{index}}" bindtap="setCoverPhoto">
+        <image src="{{item.path}}" mode="aspectFill" />
+        <text wx:if="{{item.isCover}}" class="photo-tile__cover">封面</text>
+        <button class="photo-tile__remove" catchtap="removePhoto" data-index="{{index}}">×</button>
+      </view>
+      <button wx:if="{{photos.length < 9}}" class="photo-add photo-add--album" bindtap="choosePhotos"><text>＋</text><text>相册多选</text></button>
+      <button wx:if="{{photos.length < 9}}" class="photo-add" bindtap="takePhoto"><text>⌾</text><text>拍一张</text></button>
+    </view>
+  </view>
+
+  <view class="form-card">
+    <view class="field">
+      <text class="field__label">它叫什么？<text class="field__required">必填</text></text>
+      <input class="field__input" placeholder="例如：布丁、芝麻、奶糖" value="{{form.name}}" data-field="name" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">年龄</text>
+      <input class="field__input" placeholder="例如：2 岁（不知道也没关系）" maxlength="32" value="{{form.age}}" data-field="age" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">出生日期</text>
+      <picker mode="date" value="{{form.birthday}}" start="2000-01-01" end="2099-12-31" bindchange="onBirthdayChange">
+        <view class="date-picker {{form.birthday ? 'date-picker--filled' : ''}}">{{form.birthday || '选择出生日期，年龄会自动更新'}}<text>⌄</text></view>
+      </picker>
+    </view>
+    <view class="field">
+      <text class="field__label">外貌小线索</text>
+      <input class="field__input" placeholder="例如：黑猫、黄眼睛、白手套" value="{{form.traits}}" data-field="traits" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">它的性格</text>
+      <textarea class="field__textarea" placeholder="例如：好奇、傲娇、喜欢观察人，也可以写一句你最懂它的话" value="{{form.personality}}" data-field="personality" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">它喜欢什么</text>
+      <input class="field__input" placeholder="例如：鸡胸肉、晒太阳、纸箱" value="{{form.likes}}" data-field="likes" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">它不喜欢什么</text>
+      <input class="field__input" placeholder="例如：吹风机、陌生人、被吵醒" value="{{form.dislikes}}" data-field="dislikes" bindinput="onInput" />
+    </view>
+    <view class="field field--persona">
+      <text class="field__label">拟人化角色</text>
+      <input class="field__input" placeholder="例如：家里的傲娇小管家" value="{{form.humanRole}}" data-field="humanRole" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">它说话的方式</text>
+      <input class="field__input" placeholder="例如：短句、毒舌但会安慰人" value="{{form.speechStyle}}" data-field="speechStyle" bindinput="onInput" />
+    </view>
+    <view class="field">
+      <text class="field__label">口头禅</text>
+      <input class="field__input" placeholder="例如：朕知道了，退下吧" value="{{form.catchphrase}}" data-field="catchphrase" bindinput="onInput" />
+    </view>
+  </view>
+
+  <text class="privacy-hint">这些资料默认私密，只用于让生成结果更像它。</text>
+  <button class="primary-button save-button" bindtap="save">{{editingId ? '保存这次修改' : '保存小主角'}}</button>
+</view>

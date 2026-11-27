@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/cats/cats",
+    "pages/cat-edit/cat-edit",
+    "pages/cat-profile/cat-profile",
+    "pages/mine/mine",
+    "pages/feedback/feedback",
+    "pages/welfare/welfare",
+    "pages/login/login"
+  ],
+  "subpackages": [
+    {
+      "root": "subpackages/creation",
+      "pages": [
+        "capture/capture",
+        "create/create",
+        "special-create/special-create",
+        "special-templates/special-templates",
+        "video-feed/video-feed",
+        "style-templates/style-templates",
+        "works/works",
+        "sticker-result/sticker-result"
+      ]
+    },
+    {
+      "root": "subpackages/companion",
+      "pages": [
+        "chat/chat",
+        "fortune/fortune",
+        "cat-translator/cat-translator",
+        "calendar/calendar",
+        "cat-card/cat-card",
+        "trace-map/trace-map",
+        "cyber-blessing/cyber-blessing"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTitleText": "言喵",
+    "navigationBarBackgroundColor": "#F8F7FB",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F8F7FB",
+    "backgroundTextStyle": "light"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于在喵迹地图记录遇见流浪猫的位置"
+    },
+    "scope.record": {
+      "desc": "用于把你口述的画面描述转换成文字"
+    }
+  },
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "wifi",
+      "packages": ["subpackages/creation"]
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

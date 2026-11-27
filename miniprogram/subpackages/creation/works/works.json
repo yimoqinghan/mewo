@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "喵作集",
+  "navigationBarBackgroundColor": "#B8D7FF",
+  "usingComponents": {
+    "bottom-nav": "/components/bottom-nav/bottom-nav"
+  }
+}

@@ -1,0 +1,16 @@
+<view class="login-page">
+  <image class="login-cloud" src="{{assets.cloudSoft}}" mode="aspectFit" />
+  <image class="login-cat" src="{{assets.homeCat}}" mode="aspectFit" />
+  <view class="login-card">
+    <text class="kicker">你好呀，铲屎官</text>
+    <text class="login-title">把可爱，安心存好。</text>
+    <text class="login-desc">登录后，宠物档案和小贴纸都有了自己的家。</text>
+    <text class="login-hint">用微信账号进入言喵，宠物档案和作品会跟着你一起保存。</text>
+    <view class="agreement" bindtap="toggleAgreement" role="checkbox" aria-checked="{{agreed}}"><text class="check {{agreed ? 'checked' : ''}}">{{agreed ? '✓' : ''}}</text><text>我已阅读并同意下方账号与隐私说明</text></view>
+    <button class="login-button" bindtap="login" disabled="{{busy || !agreed || !configured}}" loading="{{busy}}">{{busy ? '正在登录并同步…' : '微信一键登录'}}</button>
+    <text class="login-error" wx:if="{{error}}">{{error}}</text>
+    <text class="service-note" wx:if="{{!configured}}">登录服务尚在配置中。配置完成后可重新尝试。</text>
+    <button class="browse-button" bindtap="back" disabled="{{busy}}">先逛一逛</button>
+  </view>
+  <view class="privacy-copy"><text class="privacy-title">账号与隐私说明</text><text>使用微信提供的账号标识识别你的言喵账号，本次登录不获取手机号。宠物资料、原照片和贴纸默认私密，仅在你主动分享时发送图片。照片在点击生成后上传用于抠图，不用于公开展示。退出登录不会删除服务端资料；在本小程序使用同一微信账号登录可找回。不同平台的账号暂不自动互通。</text></view>
+</view>

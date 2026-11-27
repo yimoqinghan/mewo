@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "AI创作工坊",
+  "navigationBarBackgroundColor": "#B8D7FF",
+  "usingComponents": {
+    "generation-loading": "../../../components/generation-loading/generation-loading"
+  }
+}

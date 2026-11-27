@@ -1,0 +1,69 @@
+<view class="feedback-page">
+  <view class="feedback-topbar">
+    <button class="feedback-back" bindtap="goBack" aria-label="返回">‹</button>
+    <view>
+      <text class="feedback-eyebrow">MEOW TOGETHER</text>
+      <text class="feedback-title">反馈与共创</text>
+    </view>
+    <view class="feedback-topbar__spacer"></view>
+  </view>
+
+  <block wx:if="{{!submitted}}">
+    <view class="feedback-intro">
+      <text class="feedback-intro__title">让言喵更懂你</text>
+      <text class="feedback-intro__desc">遇到问题可以告诉我们，有好玩的想法也欢迎一起实现。</text>
+    </view>
+
+    <view class="feedback-type-list">
+      <view wx:for="{{types}}" wx:key="id" class="feedback-type {{type === item.id ? 'is-active' : ''}}" data-type="{{item.id}}" bindtap="selectType">
+        <view>
+          <text class="feedback-type__title">{{item.title}}</text>
+          <text class="feedback-type__desc">{{item.desc}}</text>
+        </view>
+        <view class="feedback-type__check">{{type === item.id ? '✓' : ''}}</view>
+      </view>
+    </view>
+
+    <view class="feedback-form-card">
+      <view class="feedback-field">
+        <text class="feedback-label">{{type === 'feedback' ? '问题标题' : '建议标题'}}<text class="feedback-optional">选填</text></text>
+        <input class="feedback-input" data-field="title" value="{{title}}" maxlength="60" placeholder="给这条内容起个简短标题" bindinput="onFieldInput" />
+      </view>
+      <view class="feedback-field">
+        <text class="feedback-label">{{type === 'feedback' ? '问题描述' : '你的想法'}}<text class="feedback-required">必填</text></text>
+        <textarea class="feedback-textarea" data-field="content" value="{{content}}" maxlength="500" auto-height="true" placeholder="{{type === 'feedback' ? '请描述在哪里遇到问题，怎样操作可以复现' : '说说你希望言喵增加什么，或你想怎么玩'}}" bindinput="onFieldInput"></textarea>
+        <text class="feedback-counter">{{content.length}} / 500</text>
+      </view>
+      <view class="feedback-field">
+        <text class="feedback-label">联系方式<text class="feedback-optional">选填</text></text>
+        <input class="feedback-input" data-field="contact" value="{{contact}}" maxlength="80" placeholder="方便我们回复时填写，不填也可以" bindinput="onFieldInput" />
+      </view>
+      <view class="feedback-field feedback-field--last">
+        <text class="feedback-label">问题截图<text class="feedback-optional">选填</text></text>
+        <view wx:if="{{!attachmentPath}}" class="feedback-upload" bindtap="chooseScreenshot">
+          <text class="feedback-upload__plus">＋</text>
+          <text class="feedback-upload__text">添加截图</text>
+        </view>
+        <view wx:else class="feedback-attachment">
+          <image class="feedback-attachment__image" src="{{attachmentPath}}" mode="aspectFill" bindtap="previewScreenshot" />
+          <button class="feedback-attachment__remove" bindtap="removeScreenshot">移除</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="feedback-privacy">截图可能包含隐私，请先确认内容适合提交。我们只会将它用于问题定位和产品改进。</view>
+    <button class="feedback-submit" bindtap="submit" disabled="{{submitting}}">{{submitting ? '正在保存…' : '提交给言喵'}}</button>
+  </block>
+
+  <view wx:else class="feedback-success">
+    <view class="feedback-success__badge">已收到</view>
+    <text class="feedback-success__title">谢谢你的共创</text>
+    <text class="feedback-success__desc">这条{{submittedTypeTitle}}已经保存。后续接入工单系统后，我们会继续同步处理进度。</text>
+    <view class="feedback-success__note">
+      <text>当前状态：待处理</text>
+      <text>内容默认仅用于言喵产品改进，不会公开展示。</text>
+    </view>
+    <button class="feedback-submit" bindtap="resetForm">继续提交</button>
+    <button class="feedback-secondary" bindtap="goBack">返回我的</button>
+  </view>
+</view>

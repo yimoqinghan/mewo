@@ -1,0 +1,124 @@
+.welfare-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: calc(env(safe-area-inset-top) + 28rpx) 28rpx calc(52rpx + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, #b8d7ff 0, #eef5ff 32%, #f8f7fb 72%);
+  color: #20243c;
+}
+
+.welfare-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.welfare-back {
+  width: 72rpx;
+  height: 72rpx;
+  margin: 0;
+  padding: 0 0 8rpx;
+  border: 3rpx solid #ffffff;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .84);
+  color: #3d2a72;
+  font-size: 54rpx;
+  font-weight: 300;
+  line-height: 60rpx;
+  text-align: center;
+}
+
+.welfare-back::after { border: 0; }
+.welfare-topbar__copy { display: flex; align-items: center; flex-direction: column; }
+.welfare-eyebrow { color: #65708c; font-size: 16rpx; letter-spacing: 3rpx; }
+.welfare-title { margin-top: 4rpx; color: #3d2a72; font-size: 34rpx; font-weight: 850; }
+.welfare-topbar__tag { padding: 9rpx 14rpx; border-radius: 999rpx; background: rgba(255, 255, 255, .78); color: #806c28; font-size: 18rpx; font-weight: 750; }
+
+.welfare-balance-card {
+  margin-top: 28rpx;
+  padding: 28rpx;
+  border: 3rpx solid #ffffff;
+  border-radius: 30rpx;
+  background: linear-gradient(135deg, #fff8d9 0%, #fff8fb 54%, #e6f1ff 100%);
+  box-shadow: 0 14rpx 30rpx rgba(73, 93, 145, .12);
+}
+
+.welfare-balance-card__head,
+.welfare-balance-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.welfare-balance-card__label { color: #3d2a72; font-size: 24rpx; font-weight: 800; }
+.welfare-balance-card__hint { color: #9b8b6f; font-size: 17rpx; }
+.welfare-balance-card__number { display: flex; align-items: baseline; margin-top: 12rpx; color: #3d2a72; font-size: 86rpx; font-weight: 850; line-height: 1; }
+.welfare-balance-card__coin-icon { width: 96rpx; height: 96rpx; margin-right: 16rpx; align-self: center; }
+.welfare-balance-card__unit { margin-left: 14rpx; color: #806c28; font-size: 28rpx; font-weight: 750; }
+.welfare-balance-card__meta { margin-top: 22rpx; color: #7d7897; font-size: 19rpx; }
+
+.welfare-share-card { margin-top: 18rpx; padding: 22rpx 24rpx 18rpx; border: 3rpx solid #ffffff; border-radius: 26rpx; background: linear-gradient(135deg, #fff1f7 0%, #f3edff 100%); box-shadow: 0 12rpx 26rpx rgba(73, 93, 145, .09); }
+.welfare-share-card__head { display: flex; align-items: center; justify-content: space-between; }
+.welfare-share-card__title, .welfare-share-card__desc { display: block; }
+.welfare-share-card__title { color: #3d2a72; font-size: 27rpx; font-weight: 850; }
+.welfare-share-card__desc { margin-top: 7rpx; color: #85899b; font-size: 18rpx; }
+.welfare-share-card__reward { display: flex; align-items: center; color: #d84e80; font-size: 26rpx; font-weight: 850; }
+.welfare-share-card__reward image { width: 48rpx; height: 48rpx; margin-right: 4rpx; }
+.welfare-share-button { width: 100%; height: 68rpx; margin: 18rpx 0 0; padding: 0; border-radius: 999rpx; background: #f66e9c; color: #ffffff; font-size: 22rpx; font-weight: 800; line-height: 68rpx; box-shadow: 0 9rpx 18rpx rgba(246, 110, 156, .2); }
+.welfare-share-button::after { border: 0; }
+.welfare-share-card__note { display: block; margin-top: 10rpx; color: #a0a1b0; font-size: 16rpx; text-align: center; }
+
+.welfare-checkin-card,
+.welfare-history-card {
+  margin-top: 22rpx;
+  padding: 24rpx;
+  border: 3rpx solid #ffffff;
+  border-radius: 26rpx;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 12rpx 26rpx rgba(73, 93, 145, .09);
+}
+
+.welfare-section-head { display: flex; align-items: flex-start; justify-content: space-between; }
+.welfare-section-title, .welfare-section-desc { display: block; }
+.welfare-section-title { color: #3d2a72; font-size: 28rpx; font-weight: 800; }
+.welfare-section-desc { margin-top: 7rpx; color: #85899b; font-size: 19rpx; }
+.welfare-streak, .welfare-refresh { padding: 8rpx 12rpx; border-radius: 999rpx; background: #fff4bf; color: #806c28; font-size: 18rpx; font-weight: 750; }
+
+.welfare-checkin-days { display: flex; justify-content: space-between; margin-top: 24rpx; }
+.welfare-checkin-day { display: flex; align-items: center; color: #a0a1b0; font-size: 16rpx; flex-direction: column; }
+.welfare-checkin-day__dot { display: flex; width: 42rpx; height: 42rpx; align-items: center; justify-content: center; margin-bottom: 7rpx; border: 2rpx solid #e4e6ef; border-radius: 50%; background: #fafbff; color: #b3b6c4; font-size: 22rpx; }
+.welfare-checkin-day.is-active { color: #9b6b24; }
+.welfare-checkin-day.is-active .welfare-checkin-day__dot { border-color: #ffe27a; background: #fff4bf; color: #806c28; }
+.welfare-checkin-day.is-current .welfare-checkin-day__dot { border-color: #f66e9c; box-shadow: 0 0 0 5rpx rgba(246, 110, 156, .12); }
+
+.welfare-primary-button { display: flex; width: 100%; height: 78rpx; align-items: center; justify-content: center; margin-top: 24rpx; padding: 0; border-radius: 999rpx; background: #f66e9c; color: #ffffff; font-size: 24rpx; font-weight: 800; line-height: 78rpx; box-shadow: 0 10rpx 20rpx rgba(246, 110, 156, .2); }
+.welfare-primary-button::after { border: 0; }
+.welfare-primary-button.is-done { background: #d9dce7; color: #777b8e; box-shadow: none; }
+.welfare-button-coin-icon { width: 42rpx; height: 42rpx; margin-right: 8rpx; }
+
+.welfare-section-head--tasks { margin: 28rpx 4rpx 16rpx; align-items: center; }
+.welfare-task-list { display: flex; flex-direction: column; gap: 14rpx; }
+.welfare-task { display: flex; align-items: center; min-height: 124rpx; padding: 18rpx; border: 3rpx solid #ffffff; border-radius: 24rpx; background: rgba(255, 255, 255, .9); box-shadow: 0 10rpx 22rpx rgba(73, 93, 145, .08); }
+.welfare-task.is-done { opacity: .68; }
+.welfare-task__mark { display: flex; width: 66rpx; height: 66rpx; align-items: center; justify-content: center; flex: 0 0 66rpx; border-radius: 22rpx; background: #e4f0ff; color: #2557d6; font-size: 28rpx; font-weight: 850; }
+.welfare-task:nth-child(2) .welfare-task__mark { background: #fff0c2; color: #9b6b24; }
+.welfare-task__copy { min-width: 0; margin-left: 16rpx; }
+.welfare-task__title, .welfare-task__desc { display: block; }
+.welfare-task__title { color: #3d2a72; font-size: 23rpx; font-weight: 800; }
+.welfare-task__desc { margin-top: 7rpx; color: #85899b; font-size: 17rpx; line-height: 1.4; }
+.welfare-task__action { display: flex; align-items: flex-end; margin-left: auto; flex-direction: column; }
+.welfare-task__reward { display: flex; align-items: center; color: #e26590; font-size: 23rpx; font-weight: 800; }
+.welfare-task__coin-icon { width: 40rpx; height: 40rpx; margin-right: 5rpx; }
+.welfare-task__action button { min-width: 112rpx; height: 52rpx; margin: 8rpx 0 0; padding: 0 14rpx; border-radius: 999rpx; background: #fff0f5; color: #bd5d85; font-size: 17rpx; line-height: 52rpx; }
+.welfare-task__action button::after { border: 0; }
+.welfare-task.is-done .welfare-task__action button { background: #f0f1f6; color: #85899b; }
+
+.welfare-history-card { padding-bottom: 18rpx; }
+.welfare-section-head--history { align-items: center; }
+.welfare-section-head--history .welfare-section-title { font-size: 24rpx; }
+.welfare-history-list { margin-top: 18rpx; }
+.welfare-history-row { display: flex; align-items: center; justify-content: space-between; padding: 16rpx 0; border-top: 2rpx solid #f0f1f6; color: #626981; font-size: 19rpx; }
+.welfare-history-row__amount { display: flex; align-items: center; color: #d96c90; font-size: 21rpx; font-weight: 750; }
+.welfare-history-row__coin-icon { width: 36rpx; height: 36rpx; margin-right: 5rpx; }
+.welfare-history-row__time { margin-left: 10rpx; color: #a0a1b0; font-size: 16rpx; font-weight: 400; }
+.welfare-empty { display: block; margin-top: 18rpx; color: #a0a1b0; font-size: 18rpx; line-height: 1.5; }
+.welfare-footnote { display: block; margin: 20rpx 10rpx 0; color: #85899b; font-size: 16rpx; line-height: 1.5; text-align: center; }

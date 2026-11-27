@@ -1,0 +1,20 @@
+<view class="generation-loading generation-loading--{{variant}}">
+  <view class="generation-loading__head">
+    <text>{{statusText}}</text>
+    <text class="generation-loading__sub">{{subtitle}}</text>
+  </view>
+  <view class="generation-loading__cat-stage">
+    <view class="generation-loading__cat-runway"></view>
+    <view class="generation-loading__cat-runner" style="left: {{progress}}%;">
+      <view class="generation-loading__cat-glow"></view>
+      <image class="generation-loading__cat" src="{{catRunLoading}}" mode="aspectFit" />
+    </view>
+  </view>
+  <view class="generation-loading__progress" aria-label="生成进度">
+    <view class="generation-loading__track">
+      <view class="generation-loading__fill" style="width: {{progress}}%;"></view>
+    </view>
+    <view class="generation-loading__meta"><text>{{progress}}%</text><text>{{stageLabel}}</text></view>
+    <text class="generation-loading__hint">{{progressHint}}</text>
+  </view>
+</view>

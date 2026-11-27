@@ -1,0 +1,66 @@
+<svg viewBox="0 0 680 396" width="100%" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>双端小程序混合云架构</title>
+<desc>微信与抖音小程序通过统一API网关接入腾讯云后端，后端调用火山引擎AI生成能力，媒体文件存于腾讯云对象存储。</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<text x="40" y="30" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#888780">客户端</text>
+
+<g>
+<rect x="40" y="44" width="240" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="160" y="64" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" dominant-baseline="central">微信小程序</text>
+<text x="160" y="82" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#185FA5" text-anchor="middle" dominant-baseline="central">主战场 · 主力用户</text>
+</g>
+
+<g>
+<rect x="320" y="44" width="240" height="56" rx="8" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.5"/>
+<text x="440" y="64" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="500" fill="#791F1F" text-anchor="middle" dominant-baseline="central">抖音小程序</text>
+<text x="440" y="82" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#A32D2D" text-anchor="middle" dominant-baseline="central">增量渠道 · 同一后端</text>
+</g>
+
+<path d="M160 100 L160 132 L300 132 L300 152" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M440 100 L440 132 L380 132 L380 152" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<text x="40" y="126" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#888780">接入层</text>
+
+<g>
+<rect x="180" y="152" width="320" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="340" y="172" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="500" fill="#2C2C2A" text-anchor="middle" dominant-baseline="central">统一 API 网关</text>
+<text x="340" y="190" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#5F5E5A" text-anchor="middle" dominant-baseline="central">双端鉴权适配 · 手机号绑定账号</text>
+</g>
+
+<path d="M340 208 L340 236" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<text x="40" y="246" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#888780">腾讯云</text>
+
+<g>
+<rect x="40" y="262" width="180" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="130" y="282" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" dominant-baseline="central">轻量服务器</text>
+<text x="130" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#185FA5" text-anchor="middle" dominant-baseline="central">业务逻辑 · 任务队列</text>
+</g>
+
+<g>
+<rect x="250" y="262" width="180" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="340" y="282" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" dominant-baseline="central">COS + CDN</text>
+<text x="340" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#185FA5" text-anchor="middle" dominant-baseline="central">作品图片 · 视频存储</text>
+</g>
+
+<g>
+<rect x="460" y="262" width="180" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="550" y="282" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="500" fill="#0C447C" text-anchor="middle" dominant-baseline="central">内容安全 + 支付</text>
+<text x="550" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#185FA5" text-anchor="middle" dominant-baseline="central">图片审核 · 微信支付</text>
+</g>
+
+<path d="M340 318 L340 344" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<text x="40" y="354" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#888780">火山引擎</text>
+
+<g>
+<rect x="180" y="358" width="320" height="56" rx="8" fill="#FBEAF0" stroke="#993556" stroke-width="0.5"/>
+<text x="340" y="378" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="500" fill="#72243E" text-anchor="middle" dominant-baseline="central">火山方舟 · AI 推理</text>
+<text x="340" y="396" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#993556" text-anchor="middle" dominant-baseline="central">Seedream 生图 · Seedance 视频</text>
+</g>
+</svg>

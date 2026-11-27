@@ -1,0 +1,33 @@
+{
+  "name": "yanmiao-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "言喵多端统一后端 API（微信小程序 / 抖音小程序 / H5 共用一套数据）",
+  "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "worker": "node src/workers/generationWorker.js",
+    "migrate": "node src/db/migrate.js",
+    "test:gif-format": "node scripts/gif-format-regression-test.mjs",
+    "test:gif-provider": "node scripts/gif-provider-regression-test.mjs",
+    "test:special-resource": "node scripts/special-create-resource-test.mjs",
+    "test:resources": "node scripts/resource-audit.mjs",
+    "test:works-resource": "node scripts/works-resource-regression-test.mjs",
+    "sync:assets": "node scripts/sync-static-assets.mjs",
+    "seed": "node src/db/seed.js",
+    "setup": "npm run migrate && npm run seed"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@fastify/rate-limit": "^10.2.1",
+    "cos-nodejs-sdk-v5": "^2.14.6",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1"
+  }
+}

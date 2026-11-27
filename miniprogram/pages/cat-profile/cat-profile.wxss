@@ -1,0 +1,47 @@
+page { background:#f8f7fb; }
+.profile-page { min-height:100vh; padding:0 28rpx calc(50rpx + env(safe-area-inset-bottom)); background:linear-gradient(180deg,#b8d7ff 0,#eaf3ff 420rpx,#f8f7fb 780rpx); color:#20243c; }
+.profile-topbar { display:flex; align-items:center; justify-content:space-between; height:136rpx; padding-top:env(safe-area-inset-top); color:#3d2a72; font-size:28rpx; font-weight:800; }
+.back-button,.edit-button { display:flex; align-items:center; justify-content:center; min-width:74rpx; height:62rpx; padding:0 16rpx; border:2rpx solid #fff; border-radius:999rpx; background:rgba(255,255,255,.78); color:#20243c; }
+.back-button { font-size:52rpx; font-weight:300; line-height:1; }
+.edit-button { color:#2557d6; font-size:20rpx; }
+.shared-badge { padding:10rpx 16rpx; border-radius:999rpx; background:rgba(255,255,255,.72); color:#6e5a9f; font-size:18rpx; }
+.profile-hero { display:flex; align-items:center; justify-content:space-between; padding:28rpx; border:3rpx solid #fff; border-radius:30rpx; background:#fff1be; box-shadow:0 14rpx 30rpx rgba(73,93,145,.12); }
+.profile-hero__copy { flex:1; min-width:0; }
+.profile-hero__eyebrow { display:block; color:#a58331; font-size:16rpx; letter-spacing:2rpx; }
+.profile-hero__name { display:block; margin-top:10rpx; color:#3d2a72; font-size:42rpx; font-weight:900; }
+.profile-hero__role { display:block; margin-top:6rpx; color:#f66e9c; font-size:23rpx; font-weight:750; }
+.profile-hero__desc { display:block; margin-top:10rpx; color:#75683a; font-size:19rpx; line-height:1.5; }
+.profile-hero__avatar { width:172rpx; height:172rpx; margin-left:18rpx; border:5rpx solid #fff; border-radius:48rpx; background:#dcecff; }
+.profile-card-button { width:100%; height:76rpx; margin-top:18rpx; padding:0; border:3rpx solid #fff; border-radius:24rpx; background:#f66e9c; color:#fff; font-size:24rpx; font-weight:800; line-height:70rpx; box-shadow:0 10rpx 20rpx rgba(246,110,156,.2); }
+.profile-card-button::after { border:0; }
+.photo-strip,.info-card { margin-top:18rpx; padding:22rpx; border:3rpx solid #fff; border-radius:24rpx; background:rgba(255,255,255,.88); box-shadow:0 10rpx 24rpx rgba(73,93,145,.08); }
+.section-head,.card-title-row { display:flex; align-items:center; justify-content:space-between; }
+.section-title,.card-title { color:#3d2a72; font-size:25rpx; font-weight:800; }
+.section-count,.persona-stamp { color:#85899b; font-size:19rpx; }
+.photo-scroll { margin-top:16rpx; white-space:nowrap; }
+.profile-photo { position:relative; display:inline-block; width:142rpx; height:142rpx; margin-right:12rpx; overflow:hidden; border:3rpx solid #eef0f8; border-radius:24rpx; background:#eef3ff; }
+.profile-photo image { width:100%; height:100%; }
+.profile-photo--cover { border-color:#f66e9c; }
+.profile-photo text { position:absolute; right:8rpx; bottom:8rpx; padding:4rpx 8rpx; border-radius:999rpx; background:#f66e9c; color:#fff; font-size:16rpx; }
+.info-card--blue { display:flex; padding:0; overflow:hidden; background:#dcecff; }
+.info-item { flex:1; padding:22rpx; }
+.info-item + .info-item { border-left:2rpx solid rgba(37,87,214,.12); }
+.info-item__label,.info-item__value { display:block; }
+.info-item__label { color:#6179a4; font-size:19rpx; }
+.info-item__value { margin-top:8rpx; color:#20243c; font-size:23rpx; font-weight:700; }
+.info-item__value--accent { color:#2557d6; }
+.tag-row { display:flex; flex-wrap:wrap; gap:10rpx; margin-top:16rpx; }
+.trait-tag { padding:8rpx 14rpx; border-radius:999rpx; background:#eef3ff; color:#5579b8; font-size:19rpx; }
+.personality { display:block; margin-top:16rpx; color:#69738d; font-size:23rpx; line-height:1.6; }
+.persona-card { background:#fff7fb; }
+.persona-stamp { padding:6rpx 10rpx; border-radius:999rpx; background:#ffe3ef; color:#a84f7a; }
+.persona-line { display:flex; align-items:flex-start; gap:18rpx; margin-top:16rpx; color:#20243c; font-size:22rpx; line-height:1.5; }
+.persona-line text:first-child { width:76rpx; flex:none; color:#f66e9c; font-weight:700; }
+.persona-line text:last-child { flex:1; }
+.likes-card { display:flex; align-items:center; justify-content:space-between; }
+.likes-text { display:block; margin-top:12rpx; color:#69738d; font-size:21rpx; }
+.likes-text--muted { color:#9ca3b5; }
+.heart-mark { color:#f66e9c; font-size:72rpx; line-height:1; }
+.profile-error { display:flex; min-height:70vh; align-items:center; justify-content:center; flex-direction:column; gap:24rpx; padding:80rpx 40rpx; background:linear-gradient(180deg,#b8d7ff,#f8f7fb); color:#6e5a9f; font-size:24rpx; text-align:center; }
+.profile-error button { margin:0; padding:0 32rpx; border:0; border-radius:999rpx; background:#f66e9c; color:#fff; font-size:22rpx; line-height:70rpx; }
+.profile-error button::after { border:0; }

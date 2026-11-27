@@ -1,0 +1,76 @@
+<view class="chat-page">
+  <view class="chat-topbar">
+    <button class="back-button" bindtap="back" aria-label="返回">‹</button>
+    <view class="chat-heading">
+      <text class="chat-heading__eyebrow">MEOW TALK</text>
+      <text class="chat-heading__title">和喵聊聊</text>
+    </view>
+    <button wx:if="{{!locked}}" class="clear-button" bindtap="clearChat">清空</button>
+  </view>
+
+  <view wx:if="{{locked}}" class="chat-lock">
+    <view class="lock-cat-wrap"><image src="{{assets.brandCat}}" mode="aspectFit" /></view>
+    <text class="lock-title">先给喵建一份档案</text>
+    <text class="lock-desc">言喵需要先知道它的名字、脾气和小习惯，才能用它的角色陪你聊天。</text>
+    <button class="primary-button" bindtap="createCat">创建喵档案</button>
+    <button class="text-button" bindtap="openCats">查看我的喵</button>
+  </view>
+
+  <block wx:else>
+    <view class="cat-switcher">
+      <view class="cat-current">
+        <image class="cat-current__avatar" src="{{currentCat.avatar || assets.fallbackCat}}" mode="aspectFill" />
+        <view class="cat-current__copy">
+          <text class="cat-current__label">正在和它聊天</text>
+          <text class="cat-current__name">{{currentCat.name}}</text>
+        </view>
+      </view>
+      <picker class="cat-picker" range="{{cats}}" range-key="name" bindchange="selectCatFromPicker">
+        <view class="switch-cat-button">换一只 <text class="dropdown-arrow" aria-hidden="true"></text></view>
+      </picker>
+    </view>
+
+    <view class="model-row">
+      <view class="model-row__copy">
+        <text class="model-row__label">聊天模型</text>
+        <text class="model-row__name">{{selectedModel.name}} · {{selectedModel.badge}}</text>
+      </view>
+      <button class="model-button" bindtap="toggleModelPicker">选择模型 <text class="dropdown-arrow" aria-hidden="true"></text></button>
+      <view wx:if="{{showModelPicker}}" class="model-menu">
+        <view class="model-menu__title">灵泉 AI 聊天榜前 6</view>
+        <view wx:for="{{models}}" wx:key="id" class="model-option {{item.id === selectedModelId ? 'model-option--active' : ''}}" data-id="{{item.id}}" bindtap="selectModel">
+          <view class="model-option__main"><text class="model-option__badge">{{item.badge}}</text><text>{{item.name}}</text></view>
+          <text class="model-option__desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{isVip}}" class="chat-quota-note">VIP · 无限畅聊</view><view wx:else class="chat-quota-note">今日聊天剩余 {{chatRemaining}} / {{chatDailyLimit}}</view>
+
+    <scroll-view class="message-scroll" scroll-y show-scrollbar="{{false}}" enhanced="{{true}}" bounces="{{false}}" scroll-into-view="{{lastMessageId}}">
+      <view wx:if="{{!messages.length}}" class="welcome-card">
+        <view class="welcome-card__spark">✦</view>
+        <text class="welcome-card__title">{{currentCat.name}} 已上线</text>
+        <text class="welcome-card__desc">它会按照自己的性格和小习惯回应你。今天想和它说点什么？</text>
+        <view class="persona-line" wx:if="{{currentCat.personality}}"><text>角色</text><text>{{currentCat.personality}}</text></view>
+        <view class="quick-prompts">
+          <text>“今天有点累”</text><text>“我想你了”</text><text>“晚安，喵”</text>
+        </view>
+      </view>
+      <view wx:for="{{messages}}" wx:key="id" class="message-group">
+        <text wx:if="{{item.showTime}}" class="message-time">{{item.timeLabel}}</text>
+        <view id="message-{{item.id}}" class="message-row message-row--{{item.role}}">
+          <image wx:if="{{item.role === 'assistant'}}" class="message-avatar" src="{{currentCat.avatar || assets.fallbackCat}}" mode="aspectFill" />
+          <view class="message-bubble {{item.pending ? 'message-bubble--pending' : ''}}"><text>{{item.text}}</text><view wx:if="{{item.pending}}" class="typing-dots"><i></i><i></i><i></i></view></view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="composer-wrap">
+      <view class="composer">
+        <input class="composer__input" value="{{draft}}" placeholder="和{{currentCat.name}}说点什么…" confirm-type="send" bindinput="onInput" bindconfirm="send" />
+        <button class="send-button {{draft ? 'send-button--ready' : ''}}" bindtap="send" disabled="{{!draft || sending}}">↑</button>
+      </view>
+      <text class="privacy-note">聊天记录会保存到云端，只有你主动清空才会删除</text>
+    </view>
+  </block>
+</view>

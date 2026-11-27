@@ -1,0 +1,135 @@
+.works-page {
+  background: linear-gradient(180deg, #cfe3ff 0, #edf5ff 36%, #f8f7fb 72%);
+}
+
+.library-summary { display:flex; align-items:center; justify-content:space-between; margin-bottom:20rpx; padding:22rpx 24rpx; border:3rpx solid #fff; border-radius:24rpx; background:rgba(255,255,255,.72); box-shadow:0 12rpx 28rpx rgba(73,93,145,.1); }
+.library-summary__eyebrow { display:block; color:#9aa1b3; font-size:17rpx; letter-spacing:3rpx; }
+.library-summary__title { display:block; margin-top:8rpx; color:#20243c; font-size:24rpx; font-weight:700; }
+.library-summary__count { color:#6b8fd9; font-size:42rpx; font-weight:850; }
+.library-summary__count text { color:#7d86a0; font-size:20rpx; font-weight:500; }
+
+.works-filter { width: 100%; margin: 2rpx 0 22rpx; white-space: nowrap; }
+.works-filter__inner { display: inline-flex; gap: 12rpx; padding: 2rpx 2rpx 8rpx; }
+.category-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 104rpx; height: 64rpx; margin: 0; padding: 0 22rpx; border: 2rpx solid rgba(255, 255, 255, .9); border-radius: 999rpx; background: rgba(255, 255, 255, .64); color: #68728d; font-size: 22rpx; line-height: 60rpx; white-space: nowrap; }
+.category-chip--active { border-color: #7095dc; background: #7095dc; color: #fff; box-shadow: 0 8rpx 16rpx rgba(91, 124, 202, .18); }
+.category-chip__count { margin-left: 8rpx; opacity: .72; font-size: 18rpx; }
+
+.add-button {
+  min-width: 150rpx;
+  padding: 0 24rpx;
+  border: 3rpx solid #ffffff;
+  border-radius: 999rpx;
+  background: #7095dc;
+  color: #ffffff;
+  font-size: 23rpx;
+  line-height: 72rpx;
+  box-shadow: 0 8rpx 18rpx rgba(91, 124, 202, .2);
+}
+
+.works-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.work-card {
+  display: flex;
+  width: calc(50% - 8rpx);
+  min-width: 0;
+  margin-bottom: 16rpx;
+  padding: 12rpx;
+  box-sizing: border-box;
+  flex-direction: column;
+  border: 3rpx solid #ffffff;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 22rpx rgba(73, 93, 145, .11);
+}
+.work-card__time { display:block; margin-top:10rpx; color:#a5abc0; font-size:17rpx; line-height:1.3; }
+.empty-title,.empty-desc { display:block; }
+.empty-title { color:#20243c; font-size:28rpx; font-weight:750; }
+.empty-desc { margin-top:10rpx; color:#85899b; font-size:22rpx; }
+
+.work-card__media {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 220rpx;
+  overflow: hidden;
+  border-radius: 10rpx;
+  background: linear-gradient(135deg, #eef4ff, #f8e8f1);
+}
+
+.work-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.work-card__image--ready { opacity: 1; }
+.work-card__video { display:block; width:100%; height:100%; background:#20243c; }
+
+.work-card__placeholder {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #8190b1;
+  font-size: 20rpx;
+  background: linear-gradient(135deg, rgba(238,244,255,.94), rgba(248,232,241,.94));
+}
+
+.work-card__placeholder--error { color: #9a7d91; }
+
+.work-card__placeholder-cat {
+  position: relative;
+  z-index: 1;
+  width: 52%;
+  height: 52%;
+  opacity: .82;
+  animation: work-placeholder-cat-breathe 1.5s ease-in-out infinite;
+}
+
+.work-card__placeholder-glow {
+  position: absolute;
+  width: 46%;
+  height: 22%;
+  bottom: 18%;
+  border-radius: 50%;
+  background: #9dbcf855;
+  filter: blur(14rpx);
+  animation: work-placeholder-glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes work-placeholder-cat-breathe { 0%,100% { transform: translateY(2rpx) scale(.96); opacity: .65; } 50% { transform: translateY(-3rpx) scale(1); opacity: 1; } }
+@keyframes work-placeholder-glow-pulse { 0%,100% { transform: scale(.82); opacity: .45; } 50% { transform: scale(1.05); opacity: .8; } }
+
+.work-card__body {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 12rpx 4rpx 6rpx;
+}
+
+.work-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #405d8e;
+  font-size: 18rpx;
+}
+
+.work-card__category { color: #7095dc; font-weight: 650; }
+
+.empty-state button {
+  width: 300rpx;
+  margin: 26rpx auto 0;
+}

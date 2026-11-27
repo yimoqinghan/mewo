@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的言喵",
+  "navigationBarBackgroundColor": "#B8D7FF",
+  "usingComponents": {
+    "bottom-nav": "/components/bottom-nav/bottom-nav"
+  }
+}

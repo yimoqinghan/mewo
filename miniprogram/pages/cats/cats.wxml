@@ -1,0 +1,42 @@
+<view class="page cats-page">
+  <view class="topbar">
+    <view>
+      <text class="page-title">猫咪档案</text>
+      <text class="page-subtitle">每一只猫，都值得被好好记住。</text>
+    </view>
+    <button class="add-button" bindtap="addCat">＋ 建档</button>
+  </view>
+
+  <view class="cats-summary"><text>我的小主角</text><text>{{cats.length}} 位猫咪成员</text></view>
+
+  <view class="cat-list" wx:if="{{cats.length}}">
+    <view class="cat-card {{item.id === currentCatId ? 'cat-card--active' : ''}}" wx:for="{{cats}}" wx:key="id" bindtap="selectCat" data-id="{{item.id}}">
+      <image class="cat-card__avatar" src="{{item.avatar}}" mode="aspectFill" />
+      <view class="cat-card__body">
+        <view class="cat-card__title-row">
+          <text class="cat-card__name">{{item.name}}</text>
+          <text class="cat-card__status" wx:if="{{item.id === currentCatId}}">当前主角</text>
+        </view>
+        <text class="cat-card__meta">{{item.ageText}} · {{item.traits}}</text>
+        <text class="cat-card__personality">{{item.personality}}</text>
+      </view>
+      <view class="cat-card__actions">
+        <button class="cat-card__profile" catchtap="viewCat" data-id="{{item.id}}">档案</button>
+        <button class="cat-card__edit" catchtap="editCat" data-id="{{item.id}}">编辑</button>
+        <button class="cat-card__manage" catchtap="manageCat" data-id="{{item.id}}">管理</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text class="empty-title">还没有猫咪档案</text>
+    <text class="empty-desc">先给家里的小主角留一个位置吧。</text>
+    <button class="secondary-button" bindtap="addCat">创建第一位主角</button>
+  </view>
+
+  <view class="tip-card">
+    <text class="tip-card__title">创作会认得它</text>
+    <text class="tip-card__text">每次拍照、生成和保存，都会绑定当前选中的猫咪。换一只猫，就从它的故事开始。</text>
+  </view>
+</view>
+<bottom-nav active="cats" />

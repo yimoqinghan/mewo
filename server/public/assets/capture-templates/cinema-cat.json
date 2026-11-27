@@ -1,0 +1,6 @@
+{
+  "id": "cinema-cat",
+  "name": "电影喵",
+  "filter": "film",
+  "beautyValues": { "natural": 26, "light": 16, "clarity": 64, "color": 18 }
+}

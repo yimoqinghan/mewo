@@ -1,0 +1,163 @@
+page {
+  background: #f8f7fb;
+  color: #20243c;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+}
+
+view,
+text,
+button,
+input,
+textarea,
+image {
+  box-sizing: border-box;
+}
+
+button::after {
+  border: 0;
+}
+
+button:active {
+  transform: translateY(2rpx);
+}
+
+.page {
+  min-height: 100vh;
+  padding: 34rpx 28rpx calc(196rpx + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, #b8d7ff 0, #eaf3ff 34%, #f8f7fb 72%);
+}
+
+.topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+}
+
+.topbar::after {
+  position: absolute;
+  right: 38rpx;
+  top: 112rpx;
+  width: 116rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: #ffe27a;
+  content: '';
+  transform: rotate(-4deg);
+  opacity: .92;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.brand__logo {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 22rpx;
+  background: #ffffff;
+}
+
+.brand__name {
+  display: block;
+  color: #20243c;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.brand__slogan {
+  display: block;
+  margin-top: 4rpx;
+  color: #85899b;
+  font-size: 20rpx;
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72rpx;
+  height: 72rpx;
+  padding: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #20243c;
+  font-size: 32rpx;
+}
+
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 36rpx 0 18rpx;
+}
+
+.section-heading__title {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.page-title {
+  color: #20243c;
+  font-size: 42rpx;
+  font-weight: 850;
+  letter-spacing: -1rpx;
+}
+
+.page-subtitle {
+  display: block;
+  margin-top: 8rpx;
+  color: #65708c;
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.section-heading__more {
+  color: #2557d6;
+  font-size: 24rpx;
+}
+
+.primary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88rpx;
+  padding: 0 30rpx;
+  border: 3rpx solid #fff;
+  border-radius: 999rpx;
+  background: #ffe27a;
+  color: #3d2a72;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.secondary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 76rpx;
+  padding: 0 28rpx;
+  border: 3rpx solid #fff;
+  border-radius: 999rpx;
+  background: #ffffff;
+  color: #20243c;
+  font-size: 26rpx;
+}
+
+.empty-state {
+  padding: 72rpx 32rpx;
+  border: 3rpx solid #ffffff;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, .84);
+  color: #85899b;
+  text-align: center;
+  box-shadow: 0 12rpx 0 -4rpx #eee1f1, 0 18rpx 28rpx rgba(104, 75, 160, 0.1);
+}
+
+.muted {
+  color: #85899b;
+}

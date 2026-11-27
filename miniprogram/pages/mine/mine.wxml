@@ -1,0 +1,65 @@
+<view class="page mine-page">
+  <view class="profile-card">
+    <view class="profile-card__avatar">{{loggedIn ? '喵' : '言'}}</view>
+    <view>
+      <text class="profile-card__eyebrow">MEOW HOME</text>
+      <text class="profile-card__name">{{loggedIn ? (user.displayName || '言喵用户') : '登录言喵'}}</text>
+      <text class="profile-card__desc">{{loggedIn ? (user.phoneMasked || '账号已同步') : '登录后同步宠物与作品'}}</text>
+    </view>
+    <button wx:if="{{!loggedIn}}" class="profile-login" bindtap="login">登录</button>
+    <button wx:else class="profile-login" bindtap="logout">退出</button>
+  </view>
+
+  <view class="welfare-entry-card" bindtap="openWelfare">
+    <view class="welfare-entry-card__top">
+      <view>
+        <text class="welfare-entry-card__eyebrow">MEOW REWARDS</text>
+        <text class="welfare-entry-card__title">每日福利</text>
+      </view>
+      <view class="welfare-entry-card__coin"><image class="welfare-entry-card__coin-icon" src="{{coinIcon}}" mode="aspectFit" /><text>{{welfare.coins}} 喵币</text></view>
+    </view>
+    <text class="welfare-entry-card__desc">签到和参加喵活动，攒下专属喵币</text>
+    <view class="welfare-entry-card__bottom">
+      <text>{{welfare.checkedIn ? '今日已签到' : '今日签到 +20 喵币'}}</text>
+      <text class="welfare-entry-card__arrow">去赚喵币 ›</text>
+    </view>
+  </view>
+
+  <view class="settings-list">
+    <view class="setting-row" wx:for="{{sections}}" wx:key="title">
+      <view>
+        <text class="setting-row__title">{{item.title}}</text>
+        <text class="setting-row__desc">{{item.desc}}</text>
+      </view>
+      <text class="setting-row__arrow">›</text>
+    </view>
+  </view>
+
+  <view class="feedback-entry-card">
+    <view class="feedback-entry-card__head">
+      <view>
+        <text class="feedback-entry-card__title">一起把言喵变好玩</text>
+        <text class="feedback-entry-card__desc">遇到问题，或有新的猫咪脑洞，都可以告诉我们</text>
+      </view>
+      <text class="feedback-entry-card__mark">共创</text>
+    </view>
+    <view class="feedback-entry-actions">
+      <view class="feedback-entry-action" data-type="feedback" bindtap="openFeedback">
+        <text class="feedback-entry-action__title">问题反馈</text>
+        <text class="feedback-entry-action__desc">Bug · 体验报错</text>
+        <text class="feedback-entry-action__arrow">›</text>
+      </view>
+      <view class="feedback-entry-action feedback-entry-action--pink" data-type="suggestion" bindtap="openFeedback">
+        <text class="feedback-entry-action__title">产品建议</text>
+        <text class="feedback-entry-action__desc">功能许愿 · 脑洞投稿</text>
+        <text class="feedback-entry-action__arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="notice-card">
+    <text class="notice-card__title">给你的安心说明</text>
+    <text class="notice-card__text">照片、宠物资料和生成作品默认只对你可见。只有当你主动下载或分享时，它才会离开言喵的小窝。</text>
+  </view>
+</view>
+<bottom-nav active="mine" />

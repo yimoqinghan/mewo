@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "喵迹地图",
+  "navigationBarBackgroundColor": "#B8D7FF",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#F8F7FB",
+  "enablePullDownRefresh": false
+}

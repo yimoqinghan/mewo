@@ -1,0 +1,54 @@
+<view class="blessing-page blessing-page--{{status}}">
+  <image class="blessing-background" src="{{assets.temple}}" mode="aspectFill" />
+  <view class="blessing-background__veil"></view>
+
+  <view class="blessing-header">
+    <button class="blessing-back" bindtap="goBack" aria-label="返回">‹</button>
+    <view class="blessing-header__copy">
+      <text class="blessing-kicker">MEOW TEMPLE</text>
+      <text class="blessing-title">赛博祈福</text>
+    </view>
+    <view class="blessing-header__coin"><image src="{{assets.coin}}" mode="aspectFit" /><text>{{coins}}</text></view>
+  </view>
+
+  <view class="blessing-scene">
+    <view class="blessing-scene__title"><text>喵喵正在替你祈福</text><text>自动敲木鱼 · 每敲一下 +1 好运值</text></view>
+    <view class="blessing-cat-wrap {{status === 'burning' ? 'is-incensing' : ''}}">
+      <view class="blessing-cat-glow"></view>
+      <view class="blessing-cat-viewport {{knockAnimationReady ? 'is-playing' : ''}}" style="background-image: url({{assets.catLoop}});"></view>
+      <text class="blessing-knock-reward {{knockRewardVisible ? 'is-visible' : ''}}">+1</text>
+    </view>
+    <view class="blessing-count-card">
+      <view><text class="blessing-count-card__label">今日敲木鱼</text><text class="blessing-count-card__value">{{woodFishCount}} <text>次</text></text></view>
+      <view class="blessing-count-card__status"><view class="blessing-live-dot"></view><text>{{status === 'burning' ? '小喵正在上香' : '小喵自动敲着呢'}}</text></view>
+    </view>
+  </view>
+
+  <view class="blessing-panel">
+    <view wx:if="{{status === 'idle'}}" class="blessing-panel__idle">
+      <view class="blessing-panel__heading"><text>让小喵替你上香</text><text>消耗 {{incenseCost}} 喵币，开启今天的陪伴祈福</text></view>
+      <button class="blessing-incense-button" bindtap="startIncense"><image src="{{assets.cat}}" mode="aspectFit" /><view><text>喵币 × {{incenseCost}} · 上香祈福</text><text>小喵会认真替你守一会儿</text></view><text class="blessing-incense-button__arrow">→</text></button>
+      <text class="blessing-note">仅作趣味陪伴和解压互动，不代表真实预测</text>
+    </view>
+
+    <view wx:if="{{status === 'burning'}}" class="blessing-panel__burning">
+      <view class="blessing-incense-smoke"><view></view><view></view><view></view></view>
+      <text class="blessing-burning-title">小喵正在上香祈福</text>
+      <text class="blessing-burning-desc">香火亮起，心意也送到了</text>
+      <view class="blessing-progress"><view style="width: {{incenseStep === 0 ? 22 : incenseStep === 1 ? 52 : 78}}%;"></view></view>
+    </view>
+
+    <view wx:if="{{status === 'result'}}" class="blessing-panel__result">
+      <view class="blessing-result-head"><view><text>今日祈福已完成</text><text>小喵替你收好一点好心情</text></view><text class="blessing-result-stamp">已收好</text></view>
+      <view class="blessing-slip">
+        <view class="blessing-slip__stamp">喵</view>
+        <text class="blessing-slip__eyebrow">MEOW NOTE</text>
+        <text class="blessing-slip__title">{{blessing.title}}</text>
+        <text class="blessing-slip__text">{{blessing.text}}</text>
+        <view class="blessing-slip__columns"><view><text>今天可以</text><text>{{blessing.good}}</text></view><view><text>先放一放</text><text>{{blessing.avoid}}</text></view></view>
+      </view>
+      <text class="blessing-note">明天小喵还会继续替你敲木鱼</text>
+      <button class="blessing-secondary" bindtap="goWelfare">去每日福利攒喵币 <text>→</text></button>
+    </view>
+  </view>
+</view>

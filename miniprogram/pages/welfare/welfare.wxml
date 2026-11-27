@@ -1,0 +1,89 @@
+<view class="welfare-page">
+  <view class="welfare-topbar">
+    <button class="welfare-back" bindtap="goBack" aria-label="返回">‹</button>
+    <view class="welfare-topbar__copy">
+      <text class="welfare-eyebrow">MEOW REWARDS</text>
+      <text class="welfare-title">每日福利</text>
+    </view>
+    <text class="welfare-topbar__tag">喵币簿</text>
+  </view>
+
+  <view class="welfare-balance-card">
+    <view class="welfare-balance-card__head">
+      <text class="welfare-balance-card__label">当前喵币</text>
+      <text class="welfare-balance-card__hint">仅限言喵内使用</text>
+    </view>
+    <view class="welfare-balance-card__number"><image class="welfare-balance-card__coin-icon" src="{{coinIcon}}" mode="aspectFit" /><text>{{coins}}</text><text class="welfare-balance-card__unit">喵币</text></view>
+    <view class="welfare-balance-card__meta">
+      <text>累计赚取 {{totalEarned}}</text>
+      <text>今日已赚 {{todayEarned}}</text>
+    </view>
+  </view>
+
+  <view class="welfare-share-card">
+    <view class="welfare-share-card__head">
+      <view>
+        <text class="welfare-share-card__title">分享给新朋友</text>
+        <text class="welfare-share-card__desc">朋友打开言喵，就能领取专属喵币</text>
+      </view>
+      <view class="welfare-share-card__reward"><image src="{{coinIcon}}" mode="aspectFit" /><text>+{{referralReward}}</text></view>
+    </view>
+    <button class="welfare-share-button" open-type="share">分享言喵 · 领 {{referralReward}} 喵币</button>
+    <text class="welfare-share-card__note">每位朋友首次打开分享页可领一次</text>
+  </view>
+
+  <view class="welfare-checkin-card">
+    <view class="welfare-section-head">
+      <view>
+        <text class="welfare-section-title">每日签到</text>
+        <text class="welfare-section-desc">连续签到，喵币慢慢攒起来</text>
+      </view>
+      <text class="welfare-streak">连续 {{streak}} 天</text>
+    </view>
+    <view class="welfare-checkin-days">
+      <view wx:for="{{checkInDays}}" wx:key="label" class="welfare-checkin-day {{item.active ? 'is-active' : ''}} {{item.current ? 'is-current' : ''}}">
+        <text class="welfare-checkin-day__dot">{{item.active ? '✓' : '·'}}</text>
+        <text>{{item.label}}</text>
+      </view>
+    </view>
+    <button class="welfare-primary-button {{checkedIn ? 'is-done' : ''}}" bindtap="claimCheckIn" disabled="{{checkedIn}}"><image class="welfare-button-coin-icon" src="{{coinIcon}}" mode="aspectFit" /><text>{{checkedIn ? '今日已签到' : '签到领 ' + checkInReward + ' 喵币'}}</text></button>
+  </view>
+
+  <view class="welfare-section-head welfare-section-head--tasks">
+    <view>
+      <text class="welfare-section-title">喵币任务</text>
+      <text class="welfare-section-desc">完成喜欢的事，顺手赚一点</text>
+    </view>
+    <text class="welfare-refresh">每日刷新</text>
+  </view>
+
+  <view class="welfare-task-list">
+    <view wx:for="{{tasks}}" wx:key="id" class="welfare-task {{item.claimed ? 'is-done' : ''}}">
+      <view class="welfare-task__mark">{{item.id === 'create' ? '创' : '共'}}</view>
+      <view class="welfare-task__copy">
+        <text class="welfare-task__title">{{item.title}}</text>
+        <text class="welfare-task__desc">{{item.desc}}</text>
+      </view>
+      <view class="welfare-task__action">
+        <view class="welfare-task__reward"><image class="welfare-task__coin-icon" src="{{coinIcon}}" mode="aspectFit" /><text>+{{item.reward}}</text></view>
+        <button bindtap="startTask" data-task="{{item.id}}" disabled="{{item.claimed}}">{{item.claimed ? '已完成' : item.action}}</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="welfare-history-card">
+    <view class="welfare-section-head welfare-section-head--history">
+      <text class="welfare-section-title">最近收益</text>
+      <text class="welfare-section-desc">只记录本设备的预览数据</text>
+    </view>
+    <view wx:if="{{transactions.length}}" class="welfare-history-list">
+      <view wx:for="{{transactions}}" wx:key="id" class="welfare-history-row">
+        <text>{{item.label}}</text>
+        <view class="welfare-history-row__amount"><image class="welfare-history-row__coin-icon" src="{{coinIcon}}" mode="aspectFit" /><text>{{item.amount >= 0 ? '+' : ''}}{{item.amount}}</text><text class="welfare-history-row__time">{{item.timeText}}</text></view>
+      </view>
+    </view>
+    <text wx:else class="welfare-empty">完成签到或任务后，这里会留下你的喵币足迹。</text>
+  </view>
+
+  <text class="welfare-footnote">喵币为言喵内虚拟道具，不可兑换现金；真实活动规则以上线版本为准。</text>
+</view>

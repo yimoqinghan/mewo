@@ -1,0 +1,76 @@
+<view class="calendar-page">
+  <view class="calendar-topbar">
+    <button class="calendar-back" bindtap="goBack" aria-label="返回">‹</button>
+    <view class="calendar-heading">
+      <text class="calendar-title">喵日历</text>
+      <text class="calendar-subtitle">把重要的日子记下来</text>
+    </view>
+  </view>
+
+  <scroll-view class="calendar-scroll" scroll-y enhanced show-scrollbar="{{false}}" bounces="{{false}}">
+    <view wx:if="{{!hasCats}}" class="calendar-empty">
+      <image src="{{assets.calendar}}" mode="aspectFit" />
+      <text class="calendar-empty__title">先给喵建个档案</text>
+      <text class="calendar-empty__desc">生日、驱虫、疫苗和体检，都会跟着对应的喵咪保存。</text>
+      <button class="calendar-primary" bindtap="createCat">去创建喵档案</button>
+    </view>
+
+    <block wx:else>
+      <picker mode="selector" range="{{catNames}}" value="{{catIndex}}" bindchange="onCatChange">
+        <view class="cat-switcher">
+          <view>
+            <text class="cat-switcher__label">当前主角</text>
+            <text class="cat-switcher__name">{{currentCatName}}</text>
+          </view>
+          <text class="cat-switcher__action">切换喵咪⌄</text>
+        </view>
+      </picker>
+
+      <view class="calendar-card">
+        <view class="calendar-card__head">
+          <button class="month-arrow" data-delta="-1" bindtap="changeMonth">‹</button>
+          <view class="month-copy"><text class="month-title">{{monthTitle}}</text><button class="today-button" bindtap="goToday">回到今天</button></view>
+          <button class="month-arrow" data-delta="1" bindtap="changeMonth">›</button>
+        </view>
+        <view class="weekday-row"><text wx:for="{{weekLabels}}" wx:key="*this">{{item}}</text></view>
+        <view class="calendar-grid">
+          <view wx:for="{{days}}" wx:key="date" class="calendar-cell {{item.inMonth ? '' : 'calendar-cell--muted'}} {{item.selected ? 'calendar-cell--selected' : ''}} {{item.isToday ? 'calendar-cell--today' : ''}}" data-date="{{item.date}}" bindtap="selectDate">
+            <text class="calendar-cell__number">{{item.day}}</text>
+            <image wx:if="{{item.hasEvent}}" class="calendar-cell__marker" src="{{assets.eventMarker}}" mode="aspectFit" />
+          </view>
+        </view>
+      </view>
+
+      <view class="selected-head">
+        <view><text class="selected-head__eyebrow">SELECTED DAY</text><text class="selected-head__title">{{selectedDateLabel}}</text></view>
+        <button class="add-event-button" bindtap="openEditor">＋ 添加提醒</button>
+      </view>
+
+      <view wx:if="{{selectedEvents.length}}" class="event-list">
+        <view wx:for="{{selectedEvents}}" wx:key="id" class="event-card event-card--{{item.color}} {{item.completed ? 'event-card--done' : ''}}">
+          <button class="event-check" data-id="{{item.id}}" bindtap="toggleEvent">{{item.completed ? '✓' : ''}}</button>
+          <view class="event-copy" data-id="{{item.id}}" bindtap="openEditor">
+            <view class="event-title-row"><text class="event-title">{{item.title}}</text><text class="event-type">{{item.typeLabel}}</text></view>
+            <text wx:if="{{item.notes}}" class="event-notes">{{item.notes}}</text>
+            <text class="event-status">{{item.completed ? '已完成' : '待完成'}}</text>
+          </view>
+          <button class="event-delete" data-id="{{item.id}}" catchtap="deleteEvent" aria-label="删除">×</button>
+        </view>
+      </view>
+      <view wx:else class="selected-empty"><text>这一天还没有安排</text><text>给喵记下一件小事吧</text></view>
+
+      <view class="calendar-note"><text>提醒会按当前猫咪分别保存，照片和资料不会公开。</text></view>
+    </block>
+  </scroll-view>
+
+  <view wx:if="{{showEditor}}" class="editor-mask" catchtap="closeEditor">
+    <view class="editor-sheet" catchtap="stopTap">
+      <view class="editor-head"><view><text class="editor-eyebrow">MEOW REMINDER</text><text class="editor-title">{{editingId ? '编辑提醒' : '记下一件喵事'}}</text></view><button class="editor-close" bindtap="closeEditor">×</button></view>
+      <input class="editor-input" maxlength="32" value="{{form.title}}" data-field="title" bindinput="onFormInput" placeholder="例如：奶糖生日、做年度体检" />
+      <view class="type-grid"><button wx:for="{{eventTypes}}" wx:key="key" class="type-chip type-chip--{{item.color}} {{form.type === item.key ? 'type-chip--active' : ''}}" data-type="{{item.key}}" bindtap="selectType">{{item.label}}</button></view>
+      <picker mode="date" value="{{form.date}}" bindchange="onDateChange"><view class="date-field"><text>提醒日期</text><text class="date-field__value">{{form.date}}</text></view></picker>
+      <textarea class="editor-notes" maxlength="80" value="{{form.notes}}" data-field="notes" bindinput="onFormInput" placeholder="补充一点备注（选填）" />
+      <button class="calendar-primary editor-submit" bindtap="saveEvent">保存提醒</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,30 @@
+<view class="video-feed-page">
+  <view class="video-feed-navbar">
+    <button class="video-feed-navbar-back" aria-label="返回" bindtap="back"></button>
+    <text class="video-feed-navbar-title">喵视频</text>
+  </view>
+  <view class="video-feed-stage">
+    <view class="video-feed-topbar"><view class="video-feed-tabs"><text>推荐</text><text class="active">喵视频</text></view></view>
+    <swiper class="video-feed-swiper" vertical="{{true}}" current="{{currentIndex}}" duration="260" bindchange="onSwiperChange">
+      <swiper-item wx:for="{{videos}}" wx:key="id">
+        <view class="video-feed-item">
+          <video id="video-{{index}}" class="video-feed-player" src="{{item.url}}" poster="{{item.poster}}" autoplay="{{index === currentIndex}}" paused="{{index !== currentIndex || !isPlaying}}" loop="{{true}}" controls="{{false}}" show-center-play-btn="{{false}}" show-fullscreen="{{false}}" object-fit="cover" bindtap="togglePlay" binderror="onVideoError" />
+          <view class="video-feed-shade"></view>
+          <view class="video-feed-rail">
+            <view class="video-feed-avatar"><image src="{{assets.menuCat}}" mode="aspectFill" /></view>
+            <text class="video-feed-rail-name">{{item.catName}}</text>
+            <button class="video-feed-rail-btn {{item.liked ? 'liked' : ''}} {{item.likeAnimating ? 'like-pop' : ''}}" data-index="{{index}}" bindtap="toggleLike"><image src="{{item.liked ? assets.liked : assets.like}}" mode="aspectFit" /></button><text class="video-feed-rail-label">喜欢</text>
+            <button class="video-feed-rail-btn {{item.downloading ? 'is-busy' : ''}}" data-index="{{index}}" disabled="{{item.downloading || item.sharing}}" bindtap="downloadCurrent"><view wx:if="{{item.downloading}}" class="video-feed-progress-ring" style="background:conic-gradient(#fff {{item.downloadProgress}}%, rgba(255,255,255,.24) {{item.downloadProgress}}% 100%);"><view class="video-feed-progress-ring__inner"><text>{{item.downloadProgress}}%</text></view></view><image wx:else src="{{assets.download}}" mode="aspectFit" /></button><text class="video-feed-rail-label">{{item.downloading ? '下载中' : '保存'}}</text>
+            <button class="video-feed-rail-btn {{item.sharing ? 'is-busy' : ''}}" data-index="{{index}}" disabled="{{item.downloading || item.sharing}}" bindtap="shareCurrent"><view wx:if="{{item.sharing}}" class="video-feed-progress-ring" style="background:conic-gradient(#fff {{item.shareProgress}}%, rgba(255,255,255,.24) {{item.shareProgress}}% 100%);"><view class="video-feed-progress-ring__inner"><text>{{item.shareProgress}}%</text></view></view><image wx:else src="{{assets.share}}" mode="aspectFit" /></button><text class="video-feed-rail-label">{{item.sharing ? '准备中' : '分享'}}</text>
+          </view>
+          <view class="video-feed-copy"><text class="video-feed-title">{{item.title}}</text><text class="video-feed-desc">{{item.desc}}</text><text class="video-feed-cat"># {{item.catName}}</text></view>
+          <view wx:if="{{!isPlaying && index === currentIndex}}" class="video-feed-pause-mark">▶</view>
+          <view class="video-feed-hint">上滑看下一个 · 点击暂停</view>
+        </view>
+      </swiper-item>
+    </swiper>
+    <view wx:if="{{loading}}" class="video-feed-empty"><image src="{{assets.menuCat}}" mode="aspectFit" /><text>正在准备喵视频…</text></view>
+    <view wx:elif="{{error && !videos.length}}" class="video-feed-empty"><image src="{{assets.menuCat}}" mode="aspectFit" /><text>{{error}}</text><button bindtap="loadVideos">重新加载</button></view>
+  </view>
+  <view wx:if="{{notice}}" class="video-feed-notice">{{notice}}</view>
+</view>

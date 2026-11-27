@@ -1,0 +1,97 @@
+<view class="trace-page">
+  <view class="trace-hero">
+    <view>
+      <text class="trace-hero__eyebrow">MEOW TRACE</text>
+      <text class="trace-hero__title">把遇见过的喵，留在地图上</text>
+      <text class="trace-hero__desc">只记录自己的关怀行迹，默认仅自己可见。</text>
+    </view>
+    <view class="trace-hero__stats">
+      <text class="trace-hero__count">{{allRecords.length}}</text>
+      <text class="trace-hero__unit">次遇见</text>
+    </view>
+  </view>
+
+  <view class="map-card">
+    <map wx:if="{{mapReady}}" class="trace-map" latitude="{{mapCenter.latitude}}" longitude="{{mapCenter.longitude}}" scale="12" markers="{{markers}}" show-location="{{hasLocation}}" enable-zoom enable-scroll enable-overlooking="false" bindmarkertap="onMarkerTap"></map>
+    <view wx:if="{{!mapReady}}" class="map-locked">
+      <image class="map-locked__icon" src="{{markerIconPath}}" mode="aspectFit" />
+      <text class="map-locked__title">先定位，再开始记录</text>
+      <text class="map-locked__desc">我们不会用固定城市代替你的真实位置</text>
+    </view>
+    <view wx:if="{{mapReady && !markers.length}}" class="map-empty" pointer-events="none">
+      <image class="map-empty__icon" src="{{markerIconPath}}" mode="aspectFit" />
+      <text class="map-empty__title">还没有喵迹</text>
+      <text class="map-empty__desc">遇见一只流浪喵，就把它留在这里</text>
+    </view>
+    <button class="map-locate" bindtap="locate">{{isLocating ? '定位中…' : '定位当前位置'}}</button>
+    <text class="map-privacy">位置已按约 100 米模糊展示</text>
+  </view>
+
+  <view class="trace-section trace-section--records">
+    <view class="section-head">
+      <view>
+        <text class="section-head__title">我的喵迹</text>
+        <text class="section-head__desc">沿着地图，回看每一次温柔经过</text>
+      </view>
+      <button class="section-head__action" bindtap="startRecord">记录一只</button>
+    </view>
+    <scroll-view class="filter-row" scroll-x enhanced show-scrollbar="false">
+      <button wx:for="{{filters}}" wx:key="key" class="filter-pill {{activeFilter === item.key ? 'filter-pill--active' : ''}}" data-key="{{item.key}}" bindtap="selectFilter">{{item.label}}</button>
+    </scroll-view>
+    <view wx:if="{{records.length}}" class="record-list">
+      <view wx:for="{{records}}" wx:key="id" class="record-card" data-id="{{item.id}}" bindtap="openRecord">
+        <view class="record-card__media">
+          <image wx:if="{{item.mediaType === 'image'}}" class="record-card__image" src="{{item.mediaPath}}" mode="aspectFill" />
+          <image wx:else class="record-card__image record-card__image--video" src="{{markerIconPath}}" mode="aspectFit" />
+          <text class="record-card__type">{{item.mediaLabel}}</text>
+        </view>
+        <view class="record-card__body">
+          <view class="record-card__topline">
+            <text class="record-card__behavior">{{item.nickname || item.behaviorLabel}}</text>
+            <text class="record-card__date">{{item.displayDate}}</text>
+          </view>
+          <text class="record-card__location">{{item.locationLabel}}</text>
+          <text wx:if="{{item.note}}" class="record-card__note">{{item.note}}</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="record-empty">
+      <text class="record-empty__title">你的第一条喵迹，等你留下</text>
+      <text class="record-empty__desc">点一下记录一只，拍完就会自动留在你的地图上。</text>
+      <button class="record-empty__button" bindtap="startRecord">开始记录</button>
+    </view>
+  </view>
+
+  <view wx:if="{{selectedRecord}}" class="detail-mask" catchtap="closeDetail">
+    <view class="detail-card" catchtap="stopTap">
+      <view class="detail-card__handle"></view>
+      <image wx:if="{{selectedRecord.mediaType === 'image'}}" class="detail-card__image" src="{{selectedRecord.mediaPath}}" mode="aspectFill" bindtap="previewRecordMedia" />
+      <video wx:else class="detail-card__video-player" src="{{selectedRecord.mediaPath}}" controls show-center-play-btn></video>
+      <text class="detail-card__behavior">{{selectedRecord.behaviorLabel}}</text>
+      <text class="detail-card__location">{{selectedRecord.locationLabel}} · {{selectedRecord.displayDate}}</text>
+      <view class="detail-card__nickname-row">
+        <text class="detail-card__nickname">{{selectedRecord.nickname || '还没有给它起外号'}}</text>
+        <button bindtap="openNicknameEditor">{{selectedRecord.nickname ? '修改外号' : '加个外号'}}</button>
+      </view>
+      <text wx:if="{{selectedRecord.note}}" class="detail-card__note">{{selectedRecord.note}}</text>
+      <view class="detail-card__actions">
+        <button bindtap="closeDetail">留着回看</button>
+        <button class="detail-card__delete" bindtap="deleteRecord">删除记录</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showNicknameEditor}}" class="nickname-mask" catchtap="closeNicknameEditor">
+    <view class="nickname-card" catchtap="stopTap">
+      <text class="nickname-card__title">给它起个临时外号</text>
+      <text class="nickname-card__desc">只用于记住这次遇见，不会创建正式猫咪档案</text>
+      <input class="nickname-card__input" maxlength="20" focus value="{{nicknameInput}}" placeholder="例如：树下小黑、橘子汽水" bindinput="onNicknameInput" />
+      <view class="nickname-card__actions">
+        <button bindtap="closeNicknameEditor">取消</button>
+        <button class="nickname-card__save" bindtap="saveNickname">保存外号</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{toastText}}" class="toast" role="status">{{toastText}}</view>
+</view>
